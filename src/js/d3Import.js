@@ -7,7 +7,9 @@ import {min, max} from 'd3-array';
 
 import {transition} from 'd3-transition';
 
+import {axisRight} from 'd3-axis';
 
+import {nest} from 'd3-collection';
 
 
 export {
@@ -17,5 +19,7 @@ export {
     selectAll,
     selection,
     min,
-    max
+    max,
+    axisRight,
+    nest
 };

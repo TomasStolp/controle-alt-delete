@@ -1,63 +1,84 @@
 import * as d3 from './d3Import';
 
-
-console.log(d3)
-
-const height = window.innerHeight / 4;
-const width = window.innerWidth / 4;
 const margin = {
-    top: 20, 
-    right: 20,
-    bottom: 20,
-    left: 20
+    top: 10,
+    right: 5,
+    bottom: 10,
+    left: 5
 };
 
-const svg = d3.select('svg')
-    .attr('height', height)
-    .attr('width', width);
+const width = window.innerWidth - margin.left - margin.right;
 
-const g = svg.append('g');
-    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+const height = window.innerHeight - margin.top - margin.bottom;
 
+const svg = d3.select("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
 
-const data = [{
-    id: 1,
-    name: 'Tomas',
-    highscore: 20000
-},
-{
-    id: 2,
-    name: 'Sonja',
-    highscore: 21000
-},
-{
-    id: 3,
-    name: 'Hopie',
-    highscore: 25000
-},
-{
-    id: 4,
-    name: 'Luna',
-    highscore: 23000
-}];
+const g = svg.append("g");
 
-const highscores = data.map(item => item.highscore);
-const min = d3.min(highscores);
-const max = d3.max(highscores);
+g
+    .attr("width", width)
+    .attr("height", height)
+    .style("transform", `translate(${margin.top}, ${margin.left})`);
 
 
-const scale = d3.scaleLinear().domain([max, 0]).range([0, height]);
-// console.log(height)
-// console.log(scale(25000))
 
-const bars = g.selectAll('rect');
-bars.data(data)
-        .enter()
-        .append('rect')
-        .attr('id', d => d.name)
-        .attr('x', (d, i)=> i * 40)
-        .attr('y', d => scale(d.highscore))
-        .attr('width', 35)
+// const data = [{
+//         id: 1,
+//         highscore: 23
+//     }, {
+//         id: 2,
+//         highscore: 34
+//     },
+//     {
+//         id: 3,
+//         highscore: 76
+//     },
+//     {
+//         id: 45,
+//         highscore: 54
+//     }
+// ];
+
+const data = fetch('/api/get/users/');
+
+data.then(data => data.json())
+    .then(data => initDrawing(data))
+
+
+    function initDrawing(data){
+
+    console.log('fwefwef')
+
+
+
+    const scale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+
+    const xScale = d3.axisRight().scale(scale).ticks(20);
+
+    g.append("g").call(xScale);
+
+
+    const circles = g.selectAll("circle");
+
+
+    const ethnics = d3.nest()
+        .key(d => d.geboorteland_respondent)
+        .entries(data);
+
+        console.log(ethnics)
+
+
+    circles.data(ethnics).enter().append("circle")
+
+        .attr("width", 30)
+        .attr("cx", (d, i) => {
+            return i == 0 ? 40 : i * 40 + 40;
+        })
+        .attr("cy", d => scale(0))
         .transition().duration(2000)
-        .attr('height', d => height - scale(d.highscore));
-            
+        .attr("r", d => scale(d.values.length))
+
+
+}
