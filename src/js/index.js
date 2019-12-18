@@ -1,4 +1,7 @@
 import * as d3 from './d3Import';
+import {hasMigrationBg} from './filterData';
+
+
 
 const margin = {
     top: 10,
@@ -49,18 +52,22 @@ data.then(data => data.json())
 
     function initDrawing(data){
 
-    console.log('fwefwef')
+
+
+    console.log(hasMigrationBg(data))
 
 
 
-    const scale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+    const scale = d3.scaleLinear().domain([0, 125]).range([0, (height / 2)]);
 
     const xScale = d3.axisRight().scale(scale).ticks(20);
 
     g.append("g").call(xScale);
 
 
-    const circles = g.selectAll("circle");
+
+    console.log(scale(122))
+    
 
 
     const ethnics = d3.nest()
@@ -70,14 +77,25 @@ data.then(data => data.json())
         console.log(ethnics)
 
 
-    circles.data(ethnics).enter().append("circle")
 
+    const circles = g.selectAll("circle");
+
+    circles.data(ethnics).enter()
+   .append('g')
+   .attr("class", 'test')
+   .attr('id', d =>  d.key)
+   .attr('data-radius', d => scale(d.values.length))
+
+
+    .append("circle")
+        
         .attr("width", 30)
         .attr("cx", (d, i) => {
-            return i == 0 ? 40 : i * 40 + 40;
+            return i == 0 ? 40 : i * scale(d.values.length) + 40;
         })
         .attr("cy", d => scale(0))
         .transition().duration(2000)
+        
         .attr("r", d => scale(d.values.length))
 
 
