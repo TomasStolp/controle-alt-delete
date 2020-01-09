@@ -8,6 +8,10 @@ import {
     formatData
 } from './formatData';
 
+import{
+    hasMigrationBg
+} from './filterData';
+
 console.log(d3)
 
 // const margin = {
@@ -74,7 +78,9 @@ function initDrawing(data) {
 
     const nestedRightfulness = formatData(data);
 
-    console.log(nestedRightfulness)
+    const nestedMigrationBg = hasMigrationBg(data);
+
+    console.log(nestedMigrationBg)
 
 
     // const test = d3.nest()
@@ -89,7 +95,7 @@ function initDrawing(data) {
         .style('display', 'block')
 
     dropdown.selectAll('option')
-        .data(nestedRightfulness)
+        .data(nestedMigrationBg)
         .enter()
         .append('option')
         .attr('value', d => d.key)
@@ -109,16 +115,20 @@ function initDrawing(data) {
         .style("opacity", 0);
 
 
-    var x = d3.scaleTime().range([0, width - margin.left]).nice();
+    // var x = d3.scaleTime().range([0, width - margin.left]).nice();
     var y = d3.scaleBand().rangeRound([0, height]);
+
+ 
 
 
 
     y.domain(d3.map(nestedRightfulness, function (d) {
         return d.key;
     }).keys());
+  
 
-    // var xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d"));
+
+//  var xAxis = d3.axisBottom(x);
     var yAxis = d3.axisRight(y);
     // yAxis.style('stroke', '#fff')
 
@@ -126,14 +136,22 @@ function initDrawing(data) {
     console.log(nestedRightfulness.filter(e => e.key == 'Terecht')[0].values.length)
 
     const testing = data.map(function (d) {
-        const keyLength = nestedRightfulness.filter(e => e.key == d.stel_terecht)[0].values.length;
-        return d.idealy = y(d.stel_terecht) + ((height / keyLength) / 2);
+        // const keyLength = nestedRightfulness
+        //     .filter(e => e.key == d.stel_terecht)
+        //     .reduce(e => e).values.length;
+        
+        return d.idealy = y(d.stel_terecht) + ((height / nestedRightfulness.length) / 2);
     });
 
-    const xPosition = data.map(function (d, i) {
-        const keyLength = nestedRightfulness.filter(e => e.key == d.stel_terecht)[0].values.length;
-        return d.x = i;
-    }); 
+    const xPosition = nestedRightfulness.map(group =>{
+       return group.values.map((obj, i) => {
+            return obj.x = i + 120;
+        })
+    });
+
+    console.log(xPosition)
+
+
     // console.log(testing)
 
     console.log(data)
@@ -172,11 +190,7 @@ function initDrawing(data) {
     // .attr('id', "axis--x")
     // .attr("transform", "translate(0," + height + ")")
     // .call(xAxis)
-    // .selectAll("text")	
-    // .style("text-anchor", "end")
-    // .attr("dx", "-.8em")
-    // .attr("dy", ".15em")
-    // .attr("transform", "rotate(-65)");
+
 
 
     console.log(data)
@@ -203,10 +217,11 @@ function initDrawing(data) {
     // .text("Time");
 
     var simulation = d3.forceSimulation(data)
-        // .force("x", d3.forceX(function(d, i) { return x(i); }))
-
+       
+        .force("x", d3.forceX(function(d, i) { return d.x; }))
         .force("y", d3.forceY(function (d) {
-            return y(d.idealy);
+            // console.log( y(10000))
+            return d.idealy;
         }))
         .force("collide", d3.forceCollide(4)
             .strength(1)
@@ -226,11 +241,10 @@ function initDrawing(data) {
         .attr("r", 4)
         
         .attr("cy", function (d) {
-            
-            return d.idealy;
+            return d.y;
         })
         .attr("cx", function(d, i) { 
-            return i == 0 ? 40 : d.x * 20;
+            return d.x;
         })
         .attr("opacity", 0.7)
         .style("fill", function (d) {
