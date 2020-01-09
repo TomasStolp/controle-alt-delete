@@ -1,102 +1,256 @@
-import * as d3 from './d3Import';
-import {hasMigrationBg} from './filterData';
+import * as d3 from 'd3';
+import {
+    filterData
+} from './filterData';
 
 
+import {
+    formatData
+} from './formatData';
 
-const margin = {
-    top: 10,
-    right: 5,
-    bottom: 10,
-    left: 5
-};
+console.log(d3)
 
-const width = window.innerWidth - margin.left - margin.right;
+// const margin = {
+//     top: 10,
+//     right: 5,
+//     bottom: 10,
+//     left: 5
+// };
 
-const height = window.innerHeight - margin.top - margin.bottom;
+// var width = window.innerWidth - margin.left - margin.right;
 
-const svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
+// var height = window.innerHeight - margin.top - margin.bottom;
 
-const g = svg.append("g");
+// const svg = d3.select("svg")
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom);
 
-g
-    .attr("width", width)
-    .attr("height", height)
-    .style("transform", `translate(${margin.top}, ${margin.left})`);
+// const g = svg.append("g");
+
+//     g
+//     .attr("width", width)
+//     .attr("height", height)
+//     .style("transform", `translate(${margin.top}, ${margin.left})`);
+
+const data = fetch('http://localhost:4000/api/get/users');
 
 
-
-// const data = [{
-//         id: 1,
-//         highscore: 23
-//     }, {
-//         id: 2,
-//         highscore: 34
-//     },
-//     {
-//         id: 3,
-//         highscore: 76
-//     },
-//     {
-//         id: 45,
-//         highscore: 54
-//     }
-// ];
-
-const data = fetch('/api/get/users/');
 
 data.then(data => data.json())
+    .then(data => filterData(data))
+    // .then(data => formatData(data))
     .then(data => initDrawing(data))
 
 
-    function initDrawing(data){
+function initDrawing(data) {
+
+    // const scale = d3.scaleLinear().domain([0, 1200]).range([0, (height / 2)]);
+
+    // const xScale = d3.axisRight().scale(scale).ticks(20);
+
+    // g.append("g").call(xScale);
+
+    // const ethnics = d3.nest()
+    //     .key(d => d.afkomst)
+    //     .entries(data);
+
+    // console.log(ethnics)
+
+    // const circles = g.selectAll("circle");
+
+    // circles.data(ethnics).enter()
+    //     .append('g')
+    //         .attr("class", 'test')
+    //         .attr('id', d => d.key)
+    //         .attr('data-radius', d => scale(d.values.length))
+    //     .append("circle")
+    //         // .attr("width", 30)
+    //         .attr("cx", (d, i) => {
+    //             return i == 0 ? 40 : i * (scale(d.values.length) * 2);
+    //         })
+    //         .attr("cy", (d, i) => i * (scale(d.values.length) * 2))
+    //         .transition().duration(2000)
+    //         .attr("r", d => scale(d.values.length))
+
+    const nestedRightfulness = formatData(data);
+
+    console.log(nestedRightfulness)
 
 
+    // const test = d3.nest()
+    // .key(d => d.stel_terecht)
+    // .entries(data)
 
-    console.log(hasMigrationBg(data))
-
-
-
-    const scale = d3.scaleLinear().domain([0, 125]).range([0, (height / 2)]);
-
-    const xScale = d3.axisRight().scale(scale).ticks(20);
-
-    g.append("g").call(xScale);
-
-
-
-    console.log(scale(122))
     
 
+    // const nestedHeritage = formatData(data);
+    const dropdown = d3.select('select');
+    dropdown
+        .style('display', 'block')
 
-    const ethnics = d3.nest()
-        .key(d => d.geboorteland_respondent)
-        .entries(data);
+    dropdown.selectAll('option')
+        .data(nestedRightfulness)
+        .enter()
+        .append('option')
+        .attr('value', d => d.key)
+        .html(d => d.key)
 
-        console.log(ethnics)
+    var margin = {
+        top: 20,
+        right: 20,
+        bottom: 60,
+        left: 60
+    };
+    var width = 960 - margin.left - margin.right,
+        height = 800 - margin.top - margin.bottom;
+
+    var tooltip = d3.select("#chart").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+
+    var x = d3.scaleTime().range([0, width - margin.left]).nice();
+    var y = d3.scaleBand().rangeRound([0, height]);
 
 
 
-    const circles = g.selectAll("circle");
+    y.domain(d3.map(nestedRightfulness, function (d) {
+        return d.key;
+    }).keys());
 
-    circles.data(ethnics).enter()
-   .append('g')
-   .attr("class", 'test')
-   .attr('id', d =>  d.key)
-   .attr('data-radius', d => scale(d.values.length))
+    // var xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d"));
+    var yAxis = d3.axisRight(y);
+    // yAxis.style('stroke', '#fff')
+
+    // console.log(nestedRightfulness['Terecht'].values.length)
+    console.log(nestedRightfulness.filter(e => e.key == 'Terecht')[0].values.length)
+
+    const testing = data.map(function (d) {
+        const keyLength = nestedRightfulness.filter(e => e.key == d.stel_terecht)[0].values.length;
+        return d.idealy = y(d.stel_terecht) + ((height / keyLength) / 2);
+    });
+
+    const xPosition = data.map(function (d, i) {
+        const keyLength = nestedRightfulness.filter(e => e.key == d.stel_terecht)[0].values.length;
+        return d.x = i;
+    }); 
+    // console.log(testing)
+
+    console.log(data)
+
+    var svg = d3.select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var clip = svg.append("defs").append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("x", 0)
+        .attr("y", 0);
+
+    var scatter = svg.append("g")
+        .attr("id", "scatterplot")
+        .attr("clip-path", "url(#clip)");
+
+    var colour = d3.scaleOrdinal()
+        .domain(d3.map(data, function (d) {
+            return d.stel_terecht;
+        }).keys())
+        .range(d3.schemeCategory10);
 
 
-    .append("circle")
+    // console.log(d3.map(data, function (d) {
+    //     return d.stel_terecht;
+    // }).keys())
+    // x axis
+    // svg.append("g")
+    // .attr("class", "x axis")
+    // .attr('id', "axis--x")
+    // .attr("transform", "translate(0," + height + ")")
+    // .call(xAxis)
+    // .selectAll("text")	
+    // .style("text-anchor", "end")
+    // .attr("dx", "-.8em")
+    // .attr("dy", ".15em")
+    // .attr("transform", "rotate(-65)");
+
+
+    console.log(data)
+
+    svg.append("text")
+        .style("text-anchor", "end")
+        .attr("x", width)
+        .attr("y", height - 8)
+    //  .text("Date");
+
+    // y axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr('id', "axis--y")
+        // .style('stroke', '#fff')
+        .call(yAxis);
+
+
+    // svg.append("text")
+    // .attr("transform", "rotate(-90)")
+    // .attr("y", 6)
+    // .attr("dy", "1em")
+    // .style("text-anchor", "end")
+    // .text("Time");
+
+    var simulation = d3.forceSimulation(data)
+        // .force("x", d3.forceX(function(d, i) { return x(i); }))
+
+        .force("y", d3.forceY(function (d) {
+            return y(d.idealy);
+        }))
+        .force("collide", d3.forceCollide(4)
+            .strength(1)
+            .iterations(2))
+        .stop();
+
+    // console.log(data)
+
+    // console.log(fullData[0]);
+    for (let i = 0; i < 120; ++i) simulation.tick();
+
+    scatter.selectAll(".dot")
+        .data(data)
+        .enter().append("circle")
+        .attr('id', d => d.stel_terecht)
+        .attr("class", "dot")
+        .attr("r", 4)
         
-        .attr("width", 30)
-        .attr("cx", (d, i) => {
-            return i == 0 ? 40 : i * scale(d.values.length) + 40;
+        .attr("cy", function (d) {
+            
+            return d.idealy;
         })
-        .attr("cy", d => scale(0))
-        .transition().duration(2000)
-        
-        .attr("r", d => scale(d.values.length))
+        .attr("cx", function(d, i) { 
+            return i == 0 ? 40 : d.x * 20;
+        })
+        .attr("opacity", 0.7)
+        .style("fill", function (d) {
+            // return colour(d.pivot);
+            return 'yellow'
+        })
+    // .on("mouseover", function(d) {
+    //      tooltip.transition()
+    //        .duration(200)
+    //        .style("opacity", .9);
+    //      tooltip.html(formatDateTime(d.datetime) + "<br/>" + d.pivot)
+    //        .style("left", (d3.event.pageX) + "px")
+    //        .style("top", (d3.event.pageY - 28) + "px");
+
+    //    })
+    //    .on("mouseout", function(d) {
+    //      tooltip.transition()
+    //        .duration(500)
+    //        .style("opacity", 0);
+    //    });
 
 
 }

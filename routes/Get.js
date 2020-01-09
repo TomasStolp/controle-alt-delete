@@ -3,6 +3,7 @@ const app = express();
 var router = express.Router();
 
 
+
 const jsonArray = require('../src/helpers/dataConverting.js')
 
 // async function jsonArray (path, id) {
@@ -24,18 +25,46 @@ router.get('/users/:id', (req, res)=>{
 })
 
 
+function hasMigrationBg(data){
+    const test = data.map(response => {
+
+
+        if(response.geboorteland_respondent != 'Nederland'){
+            Object.assign(response, {afkomst :response.geboorteland_respondent})
+            return response;
+        }else if(response.geboorteland_vader != 'Nederland' || response.geboorteland_moeder){
+            Object.assign(response, {
+                afkomst : [
+                    (response.geboorteland_vader != 'Nederland') ? 
+                    response.geboorteland_vader : response.geboorteland_moeder
+                ]
+            })
+           
+            return response;
+        }
+    })
+return test;
+}
+
 router.get('/users', (req, res)=>{
     
-    jsonArray('data/Testdata_waardelabels.csv')
+    jsonArray('data/opgeschoonde_data.csv')
     // .then(data => console.log(data[0]))
+    // .then((data) => {
+    //     return hasMigrationBg(data)
+    // })
         .then(data => JSON.stringify(data, null, 4) )
+        
         .then(data => {
             // res.json(data);
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.header("Content-Type",'application/json');
             res.send(data)
             res.end()
         })
 
 })
+
+
 
 module.exports = router
