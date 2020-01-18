@@ -14,16 +14,16 @@ import {
 
 console.log(d3)
 
-// const margin = {
-//     top: 10,
-//     right: 5,
-//     bottom: 10,
-//     left: 5
-// };
+const margin = {
+    top: 10,
+    right: 5,
+    bottom: 10,
+    left: 5
+};
 
-// var width = window.innerWidth - margin.left - margin.right;
+var width = window.innerWidth - margin.left - margin.right;
 
-// var height = window.innerHeight - margin.top - margin.bottom;
+var height = window.innerHeight - margin.top - margin.bottom;
 
 // const svg = d3.select("svg")
 //     .attr("width", width + margin.left + margin.right)
@@ -45,22 +45,41 @@ data.then(data => data.json())
 
 function initDrawing(data) {
 
-    const nestedRightfulness = formatData(data);
-
     const nestedMigrationBg = hasMigrationBg(data);
+    const nestedRightfulness = formatData(nestedMigrationBg);
 
-    console.log(nestedMigrationBg)
 
-    const dropdown = d3.select('select');
-    dropdown
-        .style('display', 'block')
+    nestedRightfulness.forEach(e =>{
+        e.length = e.values.length;
+    })
 
-    dropdown.selectAll('option')
-        .data(nestedMigrationBg)
-        .enter()
-        .append('option')
-        .attr('value', d => d.key)
-        .html(d => d.key)
+    console.log(nestedRightfulness)
+
+    // const temp = hasMigrationBg(nestedMigrationBg);
+    const priority_order = ['Zeer terecht', 'Terecht', 'Niet terecht, niet onterecht', 'Onterecht', 'Zeer onterecht']
+    const doubleNest = d3.nest()
+        .key(d => d.stel_terecht)
+        .sortKeys(function(a,b) { 
+            // console.log(priority_order[(priority_order.indexOf(a) - priority_order.indexOf(b))])
+            return priority_order.indexOf(a) - priority_order.indexOf(b); 
+        })
+        .key(d => d.migratieachtergrond)
+        .entries(nestedMigrationBg);
+
+        console.log(doubleNest)
+
+   
+
+    // const dropdown = d3.select('select');
+    // dropdown
+    //     .style('display', 'block')
+
+    // dropdown.selectAll('option')
+    //     .data(nestedMigrationBg)
+    //     .enter()
+    //     .append('option')
+    //     .attr('value', d => d.key)
+    //     .html(d => d.key)
 
     const margin = {
         top: 20,
@@ -68,34 +87,41 @@ function initDrawing(data) {
         bottom: 60,
         left: 60
     };
-    const width = 960 - margin.left - margin.right;
-    const height = 800 - margin.top - margin.bottom;
+    // const width = 960 - margin.left - margin.right;
+    // const height = 800 - margin.top - margin.bottom;
+
+    // const width = 200 - margin.left - margin.right;
+    // const height = 150 - margin.top - margin.bottom;
 
     const y = d3.scaleBand().rangeRound([0, height]);
 
     // From https://bl.ocks.org/chloerulesok/e45c8bb1241c4f6051ef30623e6fe552
     // Author: chloerulesok’s
-    y.domain(d3.map(nestedRightfulness, function (d) {
+    y.domain(d3.map(doubleNest, function (d) {
         return d.key;
     }).keys());
 
+
+    
 
 
     //  var xAxis = d3.axisBottom(x);
     const yAxis = d3.axisRight(y);
 
+    // yAxis.tickSize(200)
 
-    console.log(nestedRightfulness.filter(e => e.key == 'Terecht')[0].values.length)
+
+    // console.log(nestedRightfulness.filter(e => e.key =()= 'Terecht')[0].values.length)
 
     const testing = data.map(function (d) {
         // const keyLength = nestedRightfulness
         //     .filter(e => e.key == d.stel_terecht)
         //     .reduce(e => e).values.length;
 
-        return d.idealy = y(d.stel_terecht) + ((height / nestedRightfulness.length) / 2);
+        return d.idealy = y(d.stel_terecht) + ((height / doubleNest.length) / 2);
     });
 
-    const xPosition = nestedRightfulness.map(group => {
+    const xPosition = doubleNest.map(group => {
         return group.values.map((obj, i) => {
             return obj.x = i + 120;
         })
@@ -111,6 +137,7 @@ function initDrawing(data) {
     const svg = d3.select("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        // .attr("viewBox", `0 0 800 900`)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -123,6 +150,22 @@ function initDrawing(data) {
     //     .attr("height", height)
     //     .attr("x", 0)
     //     .attr("y", 0);
+
+
+    var colour = d3.scaleOrdinal()
+    .domain(d3.map(nestedMigrationBg, function(d){      
+        return d.key;
+    }))
+    .range(d3.schemeCategory10);
+
+
+    const test = d3.map(nestedMigrationBg, function(d){
+        
+        return d.key;
+    })
+
+    console.log(test)
+
 
     const scatter = svg.append("g")
         .attr("id", "scatterplot");
@@ -146,8 +189,8 @@ function initDrawing(data) {
             // console.log( y(10000))
             return d.idealy;
         }))
-        .force("collide", d3.forceCollide(7)
-            .strength(1)
+        .force("collide", d3.forceCollide(1)
+            .strength(0)
             .iterations(2))
         .stop();
 
@@ -161,12 +204,51 @@ function initDrawing(data) {
         .attr('id', d => d.stel_terecht)
         .attr("class", "dot")
         .attr("r", 6)
+        // .attr("cy", function (d, i) {
+        //     return i;
+        // })
+        // .attr("cx", function (d, i) {
+          
+            
 
-        .attr("cy", function (d) {
-            return d.y;
+        //     return i == 0 ? 10 : i * 10
+            
+        // })
+
+        .attr("cy", function (d, i, j) {
+            
+
+            return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
         })
-        .attr("cx", function (d, i) {
-            return d.x;
-        })
-        .style("fill", "#FFF33D");
+        // .attr("cx", function (d, i) {
+        //     return d.x;
+        // })
+        .style("fill", d=> colour(d.migratieachtergrond));
+
+
+    //    console.log( scatter.selectAll(".dot")
+    //     .data(nestedRightfulness))
+
+    //     scatter.selectAll(".dot")
+    //     .data(nestedRightfulness.length)
+    //     .attr("cx", function (d, i) {
+          
+    //         // return d.x;
+
+    //         return i == 0 ? 10 : i * 10 + 10;
+            
+    //     })
+
+        const population = [{
+            nl: "10"
+        }];
+    
+        // svg.select('.tick text')
+        //     // .style('fill', 'yellow')
+        //     // .select('text')
+        //     // .data(population)
+        //     // .enter()
+        //     // .append('text')
+
+        //         .text('fwefwefwef')
 }

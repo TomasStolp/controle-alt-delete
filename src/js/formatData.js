@@ -11,6 +11,7 @@ function formatData(data){
                 // console.log(priority_order[(priority_order.indexOf(a) - priority_order.indexOf(b))])
                 return priority_order.indexOf(a) - priority_order.indexOf(b); 
         })
+       
         .entries(data)
 
         // const newData = ethnics.filter(e => e.stel_terecht != "99999")

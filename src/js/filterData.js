@@ -16,10 +16,12 @@ function hasMigrationBg(data){
              }
      })
 
-     return ( d3.nest()
-                .key(d => d.migratieachtergrond)
-                .entries( [...noMigrationBg, ...hasMigrationBg])
-         )
+    //  return ( d3.nest()
+    //             .key(d => d.migratieachtergrond)
+    //             .entries( [...noMigrationBg, ...hasMigrationBg])
+    //      )
+
+    return [...noMigrationBg, ...hasMigrationBg];
      
 }
 
