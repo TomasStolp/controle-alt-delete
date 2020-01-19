@@ -12,7 +12,7 @@ import {
     hasMigrationBg
 } from './filterData';
 
-console.log(d3)
+// console.log(d3)
 
 const margin = {
     top: 10,
@@ -53,7 +53,7 @@ function initDrawing(data) {
         e.length = e.values.length;
     })
 
-    console.log(nestedRightfulness)
+    // console.log(nestedRightfulness)
 
     // const temp = hasMigrationBg(nestedMigrationBg);
     const priority_order = ['Zeer terecht', 'Terecht', 'Niet terecht, niet onterecht', 'Onterecht', 'Zeer onterecht']
@@ -66,7 +66,27 @@ function initDrawing(data) {
         .key(d => d.migratieachtergrond)
         .entries(nestedMigrationBg);
 
-        console.log(doubleNest)
+ 
+        
+        doubleNest.forEach((e) => {
+            e.values.forEach((e, i) =>{
+             
+                e.values.forEach((d, i)=>{
+                    console.log(i)
+                    d.plek = i;
+                    d.parentLength = e.values.length;
+                    // e.values.forEach((e, i)=>{
+                       
+                    // })
+                   
+                })
+            })
+        })
+
+
+        console.log(doubleNest      )
+
+        // console.log(doubleNest)
 
    
 
@@ -127,17 +147,19 @@ function initDrawing(data) {
         })
     });
 
-    console.log(xPosition)
+    // console.log(xPosition)
 
 
     // console.log(testing)
+
+
 
     console.log(data)
 
     const svg = d3.select("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        // .attr("viewBox", `0 0 800 900`)
+        .attr("viewBox", `0 0 800 900`)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -164,7 +186,7 @@ function initDrawing(data) {
         return d.key;
     })
 
-    console.log(test)
+    // console.log(test)
 
 
     const scatter = svg.append("g")
@@ -182,6 +204,7 @@ function initDrawing(data) {
     // Author: chloerulesok’s
     const simulation = d3.forceSimulation(data)
 
+
         .force("x", d3.forceX(function (d, i) {
             return d.x;
         }))
@@ -189,10 +212,10 @@ function initDrawing(data) {
             // console.log( y(10000))
             return d.idealy;
         }))
-        .force("collide", d3.forceCollide(1)
-            .strength(0)
-            .iterations(2))
-        .stop();
+        // .force("collide", d3.forceCollide(1)
+        //     .strength(0)
+        //     .iterations(2))
+        // .stop();
 
     // From https://bl.ocks.org/chloerulesok/e45c8bb1241c4f6051ef30623e6fe552
     // Author: chloerulesok’s
@@ -200,25 +223,42 @@ function initDrawing(data) {
 
     scatter.selectAll(".dot")
         .data(data)
+        // .enter().append("g")
+        // .attr('id', d => d.key)
+        
+        // .data(d => d)
+        // .data(d => {
+        //     console.log(d)
+        //     return [d.values];
+        // })
+        // .data(o => {
+        //     console.log(o.values)
+        //     return o.values;
+        // })
         .enter().append("circle")
         .attr('id', d => d.stel_terecht)
         .attr("class", "dot")
-        .attr("r", 6)
-        // .attr("cy", function (d, i) {
-        //     return i;
-        // })
-        // .attr("cx", function (d, i) {
+        .attr("r", 3)
+        .attr("cx", function (d, i) {
           
             
 
-        //     return i == 0 ? 10 : i * 10
+            // return i == 0 ? 20 : i * 20
+            console.log(d, 'fwef')
+            return d.plek == 0 ? 10 : d.plek * 10
             
-        // })
+        })
 
         .attr("cy", function (d, i, j) {
             
+            // if(d.parentLength > 10){
+            //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+            // }
 
-            return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+
+            return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+
+           
         })
         // .attr("cx", function (d, i) {
         //     return d.x;
@@ -239,9 +279,6 @@ function initDrawing(data) {
             
     //     })
 
-        const population = [{
-            nl: "10"
-        }];
     
         // svg.select('.tick text')
         //     // .style('fill', 'yellow')
