@@ -1,5 +1,5 @@
 
-const csv=require('csvtojson')
+const csv = require('csvtojson')
 
 async function jsonArray (path, id) {
     const data =  await csv().fromFile(path);
