@@ -232,7 +232,7 @@ function initDrawing(data) {
 
     update(data)
 
-    
+    let row = 15;
 
     function update(data) {
         scatter.selectAll(".dot")
@@ -245,17 +245,23 @@ function initDrawing(data) {
 
                 // return i == 0 ? 20 : i * 20
                 // console.log(d, 'fwef')
-                return d.plek == 0 ? 10 : d.plek * 10
+                if(d.plek > row){
+                  return d.plek == 0 ? 10 : d.plek * 10
+                }
+
+                // return d.plek == 0 ? 10 : d.plek * 10
 
             })
 
             .attr("cy", function (d, i, j) {
 
-                // if(d.parentLength > 10){
-                //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
-                // }
+        
+              // let index = 10;
+                if(d.plek > row){
+                    row += 15;
+                }
 
-                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? row : -row)
 
             })
 
