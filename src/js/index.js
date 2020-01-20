@@ -4,6 +4,7 @@ import {
 } from './filterData';
 
 
+
 import {
     formatData
 } from './formatData';
@@ -37,6 +38,10 @@ var height = 500 - margin.top - margin.bottom;
 //     .style("transform", `translate(${margin.top}, ${margin.left})`);
 
 const data = fetch('http://localhost:4000/api/get/users');
+
+// d3.csv("../data/opgeschoonde_data.csv").then(function(data) {
+//   console.log(data[0]);
+// });
 
 data.then(data => data.json())
     .then(data => filterData(data))
@@ -232,7 +237,7 @@ function initDrawing(data) {
 
     update(data)
 
-    let row = 15;
+    
 
     function update(data) {
         scatter.selectAll(".dot")
@@ -245,23 +250,17 @@ function initDrawing(data) {
 
                 // return i == 0 ? 20 : i * 20
                 // console.log(d, 'fwef')
-                if(d.plek > row){
-                  return d.plek == 0 ? 10 : d.plek * 10
-                }
-
-                // return d.plek == 0 ? 10 : d.plek * 10
+                return d.plek == 0 ? 10 : d.plek * 10
 
             })
 
             .attr("cy", function (d, i, j) {
 
-        
-              // let index = 10;
-                if(d.plek > row){
-                    row += 15;
-                }
+                // if(d.parentLength > 10){
+                //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+                // }
 
-                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? row : -row)
+                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
 
             })
 

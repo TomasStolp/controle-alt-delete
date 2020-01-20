@@ -1,0 +1,178 @@
+:root{
+    --black: #000;
+    --yellow: #FFF33D;
+    --white: #fff;
+}
+
+*{
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: "Montserrat";
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+    /* background-color: var(--black); */
+    background-color: #000; 
+    color: var(--white); 
+}
+
+header{
+    padding: 1rem;
+    height: 95vh;
+}
+
+.banner{
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.banner p{
+    font-weight: bold;
+}
+
+.banner p span{
+    color: var(--yellow);
+}
+
+.tagline{
+        display: flex;
+    justify-content: center;
+}
+
+header div p{
+    display: block;
+}
+
+h1{
+    font-size: 9rem;
+    text-transform: uppercase;
+    /* text-align: right; */
+    line-height: 9rem;
+}
+
+h1 span:first-of-type{
+    text-align: right;
+}
+
+h1 span{
+    display: block;
+}
+
+li{
+    list-style-type: none;
+}
+
+#axis--y text{
+    font-weight: bold;
+    fill: var(--white);
+}
+
+/* #scatterplot{
+    transform: translate(250px, 0px);
+} */
+
+
+#scatterplot rect{
+    fill: #191919;
+}
+
+svg >g{
+    transform: translate(236px, 0px);
+}
+
+#datavis-1{
+    margin-left: 3rem;
+}
+
+#population{
+    margin-bottom: 4rem;
+    height: 30rem;
+    width: 20%;
+}
+
+.legend-text{
+    fill: #fff;
+}
+
+.legend-container{
+    transform: translate(80px, 10px);
+}
+
+.tick line{
+    opacity: 0.3;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+body{
+    background-color: #000;
+}
+
+@media screen and (orientation:landscape) {
+   body{
+       background-color: #000;
+   }
+}
+
+
+nav{
+    /* display: flex;
+    width: 100%;
+    justify-content:space-evenly; */
+    /* display: inline-block; */
+    position: relative;
+}
+
+nav[data-filter="gevolg-contact"]{
+    max-width: 63rem;
+    margin: auto;
+}
+
+header nav img{
+    width: 10rem;
+}
+
+
+
+button{
+    background-color: #0e0e0e;
+    color: rgba(255, 255, 255, 0.4);
+    border: none;
+    padding: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 15rem;
+    margin-bottom: 14px;
+    transition: box-shadow .3s, transform .3s;
+    cursor: pointer;
+}
+
+/* button:hover::after{
+   content: '';
+   transition: all .5s;
+   width: 15em;
+   position: absolute;
+   bottom: 0;
+
+   height: 1rem;
+
+    /* border-bottom: 1rem solid black; */
+  /*  background-color: yellow;
+} */
+
+
+button:hover, button:active, button:focus{
+    outline: #fff;
+    transition: all .5s;
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 
+    0px -7px 0px 0px black,
+    0px -14px 0px 0px var(--white);
+    transform: translate(0px, -10px);
+    background-color: rgb(41, 41, 41);
+}
