@@ -292,7 +292,9 @@ function initDrawing(data) {
 
     //  var xAxis = d3.axisBottom(x);
     const yAxis = d3.axisLeft(y);
-
+  
+    
+    // Bron voor tickSize truc : https://medium.com/@ghenshaw.work/customizing-axes-in-d3-js-99d58863738b
     yAxis.tickSize(-1300);
   
 
