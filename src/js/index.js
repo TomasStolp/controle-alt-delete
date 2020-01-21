@@ -98,9 +98,104 @@ function initDrawing(data) {
     })
 
 
-    console.log(doubleNest)
+    // console.log(doubleNest)
 
     // console.log(doubleNest)
+
+
+
+    const test = d3.nest()
+                  .key(d => d.migratieachtergrond) .entries(data);
+
+    // data.forEach(e => e.parentLength = elem.values.length)
+    test.forEach(elem => elem.values.forEach(e => e.parentLength = elem.values.length))
+    // console.log(test.values)
+  
+         const mig = d3.nest()
+         .key(d => d.stel_terecht)
+                  .rollup(v => {
+                    return Math.ceil( (100 / v[0].parentLength) * v.length )
+                  })
+                  .entries(test[0].values);
+                  // console.log(newTest.values[0], 'wef')
+
+        
+        const geen_mig = d3.nest()
+        .key(d => d.stel_terecht)
+                  .rollup(v => {
+                    console.log(v)
+                                     
+                      return Math.round( (100 / v[0].parentLength) * v.length )
+                return 3;
+                  })
+                  .entries(test[1].values);
+        console.log(mig ,'fwef')
+
+
+
+        
+        const actualData = 
+        [{
+          key: 'migratieachtergrond',
+          waarden: mig.map(terechtheid => {
+            // let title = terechtheid.key;
+
+            // return terechtheid.key;
+            return { 
+              
+              key:terechtheid.key, 
+              waarden:[...Array(terechtheid.value).keys()].map(e => {
+                return {
+                  plek: e, 
+                  terechtheid: terechtheid.key,
+                  migratieachtergrond: 'ja'
+                }
+              })
+            
+            
+            }
+          })
+        },{
+          key: 'geen_mig',
+          waarden: geen_mig.map(terechtheid => {
+            // let title = terechtheid.key;
+
+            // return terechtheid.key;
+            return { 
+              
+              key:terechtheid.key, 
+              waarden:[...Array(terechtheid.value).keys()].map(e => {
+                return {
+                  plek: e, 
+                  terechtheid: terechtheid.key,
+                  migratieachtergrond: 'nee'
+                }
+              })
+            
+            
+            }
+          })
+        }];
+
+
+        // console.log(actualData, 'wef')
+
+        const temp = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden)
+        
+
+       const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
+
+       const hallo = temp.reduce(e =>{
+         return [...e];
+       })
+
+
+                      
+       console.log(defData, 'halle')
+ 
+        
+
+    // console.log(newTest, 'fwef')
 
 
 
@@ -135,7 +230,63 @@ function initDrawing(data) {
         return d.key;
     }).keys());
 
+    // List population
 
+    // const population = d3.select("#population")
+    // const divs = population.selectAll("div");
+    // divs.data(doubleNest)
+    // .enter().append('div')
+    //   .select('h3')
+    //     .data(nestedRightfulness)
+    //     .enter().append('h3')
+    //     .text(d => {
+    //       return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+    //     });
+
+    console.log(doubleNest)
+
+    const population = d3.select("#population");
+
+    const selection  =  population.selectAll("div")
+          .data(doubleNest)
+          .enter().append("div");
+
+          selection.append("h3")
+          // .data(nestedRightfulness)
+          // .enter().append("h3")
+          .text(d => {
+            return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+          });
+          selection.append("p")
+          .text(d => {
+            console.log(d.values[0].values.length)
+            // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
+            return `Nederlandse Nederlanders ${d.values[0].values.length}`;
+          });
+          selection.append("p")
+      
+          .text(d => {
+            return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
+          });
+
+
+      // .select('p')
+      //   .data(nestedRightfulness)
+      //   .enter().append('h3')
+      //   .text(d => {
+      //     return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+      //   })
+      // .select('h3')
+      // .data(nestedRightfulness)
+      // .text(d => {
+      //   return `${ d.key } ${d.length}`;
+      // })
+
+    // d3.select('h3#zeer-terecht')
+    //   .data(nestedRightfulness)
+    //   .text(d => {
+    //     return `${ d.key } ${d.length}`;
+    //   })
 
 
 
@@ -147,13 +298,14 @@ function initDrawing(data) {
 
 
     // console.log(nestedRightfulness.filter(e => e.key =()= 'Terecht')[0].values.length)
-
-    const testing = data.map(function (d) {
+// console.log(y("Terecht"), 'gvd')
+    const testing = defData.map(function (d) {
         // const keyLength = nestedRightfulness
         //     .filter(e => e.key == d.stel_terecht)
         //     .reduce(e => e).values.length;
-
-        return d.idealy = y(d.stel_terecht) + ((height / doubleNest.length) / 2);
+        // console.log(y(d.terechtheid))
+        // console.log((height / doubleNest.length) / 2)
+        return d.idealy = (y(d.terechtheid) + ((height / doubleNest.length) / 2));
     });
 
     const xPosition = doubleNest.map(group => {
@@ -216,7 +368,7 @@ function initDrawing(data) {
 
     // From https://bl.ocks.org/chloerulesok/e45c8bb1241c4f6051ef30623e6fe552
     // Author: chloerulesok’s
-    const simulation = d3.forceSimulation(data)
+    const simulation = d3.forceSimulation(defData)
 
 
         .force("x", d3.forceX(function (d, i) {
@@ -235,15 +387,25 @@ function initDrawing(data) {
     // Author: chloerulesok’s
     for (let i = 0; i < 120; ++i) simulation.tick();
 
-    update(data)
+    update(defData);
+
+
+
+    // const array = [...Array(200).keys()];
+
+
+   
 
     
 
     function update(data) {
-        scatter.selectAll(".dot")
+
+
+
+  scatter.selectAll(".dot")
             .data(data)
             .enter().append("circle")
-            .attr('id', d => d.stel_terecht)
+            .attr('id', d => d.migratieachtergrond)
             .attr("class", "dot")
             .attr("r", 3)
             .attr("cx", function (d, i) {
@@ -260,11 +422,41 @@ function initDrawing(data) {
                 //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
                 // }
 
-                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+                return d.y + (d.migratieachtergrond == 'ja' ? 5 : -5)
 
             })
 
             .style("fill", d => colorscale(d.migratieachtergrond));
+
+
+
+
+      
+        // scatter.selectAll(".dot")
+        //     .data(data)
+        //     .enter().append("circle")
+        //     .attr('id', d => d.stel_terecht)
+        //     .attr("class", "dot")
+        //     .attr("r", 3)
+        //     .attr("cx", function (d, i) {
+
+        //         // return i == 0 ? 20 : i * 20
+        //         // console.log(d, 'fwef')
+        //         return d.plek == 0 ? 10 : d.plek * 10
+
+        //     })
+
+        //     .attr("cy", function (d, i, j) {
+
+        //         // if(d.parentLength > 10){
+        //         //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+        //         // }
+
+        //         return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+
+        //     })
+
+        //     .style("fill", d => colorscale(d.migratieachtergrond));
     }
 
 
