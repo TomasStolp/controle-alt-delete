@@ -26,22 +26,7 @@ var width = 1230 - margin.left - margin.right;
 
 var height = 500 - margin.top - margin.bottom;
 
-// const svg = d3.select("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", height + margin.top + margin.bottom);
-
-// const g = svg.append("g");
-
-//     g
-//     .attr("width", width)
-//     .attr("height", height)
-//     .style("transform", `translate(${margin.top}, ${margin.left})`);
-
 const data = fetch('http://localhost:4000/api/get/users');
-
-// d3.csv("../data/opgeschoonde_data.csv").then(function(data) {
-//   console.log(data[0]);
-// });
 
 data.then(data => data.json())
     .then(data => filterData(data))
@@ -67,9 +52,6 @@ function initDrawing(data) {
         e.length = e.values.length;
     })
 
-    // console.log(nestedRightfulness)
-
-    // const temp = hasMigrationBg(nestedMigrationBg);
     const priority_order = ['Zeer terecht', 'Terecht', 'Niet terecht, niet onterecht', 'Onterecht', 'Zeer onterecht']
     const doubleNest = d3.nest()
         .key(d => d.stel_terecht)
@@ -82,28 +64,28 @@ function initDrawing(data) {
 
 
 
-    doubleNest.forEach((e) => {
-        e.values.forEach((e, i) => {
+    // doubleNest.forEach((e) => {
+    //     e.values.forEach((e, i) => {
 
-            e.values.forEach((d, i) => {
-                // console.log(i)
-                d.plek = i;
-                d.parentLength = e.values.length;
-                // e.values.forEach((e, i)=>{
+    //         e.values.forEach((d, i) => {
+    //             // console.log(i)
+    //             d.plek = i;
+    //             d.parentLength = e.values.length;
+    //             // e.values.forEach((e, i)=>{
 
-                // })
+    //             // })
 
-            })
-        })
-    })
+    //         })
+    //     })
+    // })
 
 
     // console.log(doubleNest)
 
     // console.log(doubleNest)
+const defData = updateData(data)
 
-
-
+function updateData(data){
     const test = d3.nest()
                   .key(d => d.migratieachtergrond) .entries(data);
 
@@ -192,8 +174,10 @@ function initDrawing(data) {
 
                       
        console.log(defData, 'halle')
+
+       return defData;
  
-        
+      }
 
     // console.log(newTest, 'fwef')
 
@@ -216,11 +200,6 @@ function initDrawing(data) {
         bottom: 60,
         left: 60
     };
-    // const width = 960 - margin.left - margin.right;
-    // const height = 800 - margin.top - margin.bottom;
-
-    // const width = 200 - margin.left - margin.right;
-    // const height = 150 - margin.top - margin.bottom;
 
     const y = d3.scaleBand().rangeRound([0, height]);
 
@@ -228,6 +207,7 @@ function initDrawing(data) {
     // Author: chloerulesok’s
     y.domain(d3.map(doubleNest, function (d) {
         return d.key;
+        
     }).keys());
 
     // List population
@@ -294,7 +274,7 @@ function initDrawing(data) {
     const yAxis = d3.axisLeft(y);
   
     
-    // Bron voor tickSize truc : https://medium.com/@ghenshaw.work/customizing-axes-in-d3-js-99d58863738b
+    // Bron voor tickSize truc :https://medium.com/@ghenshaw.work/customizing-axes-in-d3-js-99d58863738b
     yAxis.tickSize(-1300);
   
 
@@ -381,7 +361,7 @@ function initDrawing(data) {
             return d.idealy;
         }))
     // .force("collide", d3.forceCollide(1)
-    //     .strength(0)
+    //     .strength(0)f
     //     .iterations(2))
     // .stop();
 
@@ -410,14 +390,16 @@ function initDrawing(data) {
             .attr('id', d => d.migratieachtergrond)
             .attr("class", "dot")
             .attr("r", 3)
+          
             .attr("cx", function (d, i) {
 
                 // return i == 0 ? 20 : i * 20
                 // console.log(d, 'fwef')
                 return d.plek == 0 ? 10 : d.plek * 10
 
-            })
-
+            })  
+            // .transition().duration(2000)
+           
             .attr("cy", function (d, i, j) {
 
                 // if(d.parentLength > 10){
@@ -427,6 +409,7 @@ function initDrawing(data) {
                 return d.y + (d.migratieachtergrond == 'ja' ? 5 : -5)
 
             })
+             
 
             .style("fill", d => colorscale(d.migratieachtergrond));
 
@@ -468,6 +451,11 @@ function initDrawing(data) {
     consequenceMenu
       .on("click", function(){
         console.log(event.target.dataset.value);
+        const filterConsequence = data.filter(d => {
+          return d[event.target.dataset.value] != "99999" && d[event.target.dataset.value] != "0";
+        })
+        console.log(filterConsequence)
+        updateData(filter)
       })
 
     const nestedConsequence = d3.nest()
