@@ -26,22 +26,7 @@ var width = 1230 - margin.left - margin.right;
 
 var height = 500 - margin.top - margin.bottom;
 
-// const svg = d3.select("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", height + margin.top + margin.bottom);
-
-// const g = svg.append("g");
-
-//     g
-//     .attr("width", width)
-//     .attr("height", height)
-//     .style("transform", `translate(${margin.top}, ${margin.left})`);
-
 const data = fetch('http://localhost:4000/api/get/users');
-
-// d3.csv("../data/opgeschoonde_data.csv").then(function(data) {
-//   console.log(data[0]);
-// });
 
 data.then(data => data.json())
     .then(data => filterData(data))
@@ -67,9 +52,6 @@ function initDrawing(data) {
         e.length = e.values.length;
     })
 
-    // console.log(nestedRightfulness)
-
-    // const temp = hasMigrationBg(nestedMigrationBg);
     const priority_order = ['Zeer terecht', 'Terecht', 'Niet terecht, niet onterecht', 'Onterecht', 'Zeer onterecht']
     const doubleNest = d3.nest()
         .key(d => d.stel_terecht)
@@ -82,25 +64,122 @@ function initDrawing(data) {
 
 
 
-    doubleNest.forEach((e) => {
-        e.values.forEach((e, i) => {
+    // doubleNest.forEach((e) => {
+    //     e.values.forEach((e, i) => {
 
-            e.values.forEach((d, i) => {
-                // console.log(i)
-                d.plek = i;
-                d.parentLength = e.values.length;
-                // e.values.forEach((e, i)=>{
+    //         e.values.forEach((d, i) => {
+    //             // console.log(i)
+    //             d.plek = i;
+    //             d.parentLength = e.values.length;
+    //             // e.values.forEach((e, i)=>{
 
-                // })
+    //             // })
 
-            })
-        })
-    })
+    //         })
+    //     })
+    // })
 
-
-    console.log(doubleNest)
 
     // console.log(doubleNest)
+
+    // console.log(doubleNest)
+const defData = updateData(data)
+
+function updateData(data){
+    const test = d3.nest()
+                  .key(d => d.migratieachtergrond) .entries(data);
+
+    // data.forEach(e => e.parentLength = elem.values.length)
+    test.forEach(elem => elem.values.forEach(e => e.parentLength = elem.values.length))
+    // console.log(test.values)
+  
+         const mig = d3.nest()
+         .key(d => d.stel_terecht)
+                  .rollup(v => {
+                    return Math.ceil( (100 / v[0].parentLength) * v.length )
+                  })
+                  .entries(test[0].values);
+                  // console.log(newTest.values[0], 'wef')
+
+        
+        const geen_mig = d3.nest()
+        .key(d => d.stel_terecht)
+                  .rollup(v => {
+                    console.log(v)
+                                     
+                      return Math.round( (100 / v[0].parentLength) * v.length )
+                return 3;
+                  })
+                  .entries(test[1].values);
+        console.log(mig ,'fwef')
+
+
+
+        
+        const actualData = 
+        [{
+          key: 'migratieachtergrond',
+          waarden: mig.map(terechtheid => {
+            // let title = terechtheid.key;
+
+            // return terechtheid.key;
+            return { 
+              
+              key:terechtheid.key, 
+              waarden:[...Array(terechtheid.value).keys()].map(e => {
+                return {
+                  plek: e, 
+                  terechtheid: terechtheid.key,
+                  migratieachtergrond: 'ja'
+                }
+              })
+            
+            
+            }
+          })
+        },{
+          key: 'geen_mig',
+          waarden: geen_mig.map(terechtheid => {
+            // let title = terechtheid.key;
+
+            // return terechtheid.key;
+            return { 
+              
+              key:terechtheid.key, 
+              waarden:[...Array(terechtheid.value).keys()].map(e => {
+                return {
+                  plek: e, 
+                  terechtheid: terechtheid.key,
+                  migratieachtergrond: 'nee'
+                }
+              })
+            
+            
+            }
+          })
+        }];
+
+
+        // console.log(actualData, 'wef')
+
+        const temp = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden)
+        
+
+       const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
+
+       const hallo = temp.reduce(e =>{
+         return [...e];
+       })
+
+
+                      
+       console.log(defData, 'halle')
+
+       return defData;
+ 
+      }
+
+    // console.log(newTest, 'fwef')
 
 
 
@@ -121,11 +200,6 @@ function initDrawing(data) {
         bottom: 60,
         left: 60
     };
-    // const width = 960 - margin.left - margin.right;
-    // const height = 800 - margin.top - margin.bottom;
-
-    // const width = 200 - margin.left - margin.right;
-    // const height = 150 - margin.top - margin.bottom;
 
     const y = d3.scaleBand().rangeRound([0, height]);
 
@@ -133,27 +207,87 @@ function initDrawing(data) {
     // Author: chloerulesok’s
     y.domain(d3.map(doubleNest, function (d) {
         return d.key;
+        
     }).keys());
 
+    // List population
 
+    // const population = d3.select("#population")
+    // const divs = population.selectAll("div");
+    // divs.data(doubleNest)
+    // .enter().append('div')
+    //   .select('h3')
+    //     .data(nestedRightfulness)
+    //     .enter().append('h3')
+    //     .text(d => {
+    //       return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+    //     });
+
+    console.log(doubleNest)
+
+    const population = d3.select("#population");
+
+    const selection  =  population.selectAll("div")
+          .data(doubleNest)
+          .enter().append("div");
+
+          selection.append("h3")
+          // .data(nestedRightfulness)
+          // .enter().append("h3")
+          .text(d => {
+            return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+          });
+          selection.append("p")
+          .text(d => {
+            console.log(d.values[0].values.length)
+            // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
+            return `Nederlandse Nederlanders ${d.values[0].values.length}`;
+          });
+          selection.append("p")
+      
+          .text(d => {
+            return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
+          });
+
+
+      // .select('p')
+      //   .data(nestedRightfulness)
+      //   .enter().append('h3')
+      //   .text(d => {
+      //     return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+      //   })
+      // .select('h3')
+      // .data(nestedRightfulness)
+      // .text(d => {
+      //   return `${ d.key } ${d.length}`;
+      // })
+
+    // d3.select('h3#zeer-terecht')
+    //   .data(nestedRightfulness)
+    //   .text(d => {
+    //     return `${ d.key } ${d.length}`;
+    //   })
 
 
 
     //  var xAxis = d3.axisBottom(x);
     const yAxis = d3.axisLeft(y);
-
+  
+    
+    // Bron voor tickSize truc :https://medium.com/@ghenshaw.work/customizing-axes-in-d3-js-99d58863738b
     yAxis.tickSize(-1300);
   
 
 
     // console.log(nestedRightfulness.filter(e => e.key =()= 'Terecht')[0].values.length)
-
-    const testing = data.map(function (d) {
+// console.log(y("Terecht"), 'gvd')
+    const testing = defData.map(function (d) {
         // const keyLength = nestedRightfulness
         //     .filter(e => e.key == d.stel_terecht)
         //     .reduce(e => e).values.length;
-
-        return d.idealy = y(d.stel_terecht) + ((height / doubleNest.length) / 2);
+        // console.log(y(d.terechtheid))
+        // console.log((height / doubleNest.length) / 2)
+        return d.idealy = (y(d.terechtheid) + ((height / doubleNest.length) / 2));
     });
 
     const xPosition = doubleNest.map(group => {
@@ -216,7 +350,7 @@ function initDrawing(data) {
 
     // From https://bl.ocks.org/chloerulesok/e45c8bb1241c4f6051ef30623e6fe552
     // Author: chloerulesok’s
-    const simulation = d3.forceSimulation(data)
+    const simulation = d3.forceSimulation(defData)
 
 
         .force("x", d3.forceX(function (d, i) {
@@ -227,7 +361,7 @@ function initDrawing(data) {
             return d.idealy;
         }))
     // .force("collide", d3.forceCollide(1)
-    //     .strength(0)
+    //     .strength(0)f
     //     .iterations(2))
     // .stop();
 
@@ -235,36 +369,79 @@ function initDrawing(data) {
     // Author: chloerulesok’s
     for (let i = 0; i < 120; ++i) simulation.tick();
 
-    update(data)
+    update(defData);
+
+
+
+    // const array = [...Array(200).keys()];
+
+
+   
 
     
 
     function update(data) {
-        scatter.selectAll(".dot")
+
+
+
+  scatter.selectAll(".dot")
             .data(data)
             .enter().append("circle")
-            .attr('id', d => d.stel_terecht)
+            .attr('id', d => d.migratieachtergrond)
             .attr("class", "dot")
             .attr("r", 3)
+          
             .attr("cx", function (d, i) {
 
                 // return i == 0 ? 20 : i * 20
                 // console.log(d, 'fwef')
                 return d.plek == 0 ? 10 : d.plek * 10
 
-            })
-
+            })  
+            // .transition().duration(2000)
+           
             .attr("cy", function (d, i, j) {
 
                 // if(d.parentLength > 10){
                 //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
                 // }
 
-                return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+                return d.y + (d.migratieachtergrond == 'ja' ? 5 : -5)
 
             })
+             
 
             .style("fill", d => colorscale(d.migratieachtergrond));
+
+
+
+
+      
+        // scatter.selectAll(".dot")
+        //     .data(data)
+        //     .enter().append("circle")
+        //     .attr('id', d => d.stel_terecht)
+        //     .attr("class", "dot")
+        //     .attr("r", 3)
+        //     .attr("cx", function (d, i) {
+
+        //         // return i == 0 ? 20 : i * 20
+        //         // console.log(d, 'fwef')
+        //         return d.plek == 0 ? 10 : d.plek * 10
+
+        //     })
+
+        //     .attr("cy", function (d, i, j) {
+
+        //         // if(d.parentLength > 10){
+        //         //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+        //         // }
+
+        //         return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 5 : -5)
+
+        //     })
+
+        //     .style("fill", d => colorscale(d.migratieachtergrond));
     }
 
 
@@ -274,6 +451,11 @@ function initDrawing(data) {
     consequenceMenu
       .on("click", function(){
         console.log(event.target.dataset.value);
+        const filterConsequence = data.filter(d => {
+          return d[event.target.dataset.value] != "99999" && d[event.target.dataset.value] != "0";
+        })
+        console.log(filterConsequence)
+        updateData(filter)
       })
 
     const nestedConsequence = d3.nest()
