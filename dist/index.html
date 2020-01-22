@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <title>Controle Alt Delete - Ik deed niks</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -14,40 +18,176 @@
                 <li><img src="images/logo.svg" alt=""></li>
             </ul>
         </nav>
-        <div class="banner">
-            <div class="tagline">
-                <h1>
-                    <span>Ik</span>
-                    <span>deed</span>
-                    <span>niks.</span>    
-                </h1>
+            <div class="banner">
+                <div class="tagline" data-aos="fade-up">
+                    <h1>
+                        <span>Ik</span>
+                        <span>deed</span>
+                        <span>niks.</span>    
+                    </h1>
+                </div>
+                <p>Iedereen moet evenveel vertrouwen hebben in de politie,
+                <span>ongeacht zijn of haar afkomst</span></p>
             </div>
-            <p>Iedereen moet evenveel vertrouwen hebben in de politie,
-            <span>ongeacht zijn of haar afkomst</span></p>
+    </header>
+
+<section>
+    <div class="wrapper"> 
+        <h2>Etnisch Profileren</h2>
+            <div class="content-1" data-aos="fade-up">
+                <p>Etnisch profileren is een vorm van discriminatie en daarom in
+                    strijd met de mensenrechten. Wanneer de politie zonder goede
+                    of geldige reden iemand stopt, controleert, fouilleert of aanhoudt,
+                    (mede) vanwege zijn huidkleur of herkomst is er sprake van etnisch
+                    profileren.<span><br>— Amnesty International</span>
+                </p>
+                <p class="img-size-1"><img src="images/picture-1.jpg" alt=""></p>
+            </div>
+
+            <div class="content-2" data-aos="fade-up">
+                <p class="img-size-1"><img src="images/picture-2.jpg" alt=""></p>
+                <p>Organisatie <span class="marker">CTRL ALT DELETE</span> heeft een enquete gehouden in
+                Amsterdam over het onderwerp etnisch profileren. Uit de enquete
+                bleek dat 485 mensen van de 1900 ondervraagde daadwerkelijk
+                contact hadden met de politie in de afgelopen 12 maanden.
+                Hierop hebben wij onze datavisualisaties gebaseerd.</p>
+                
+
+</section>
+<section>
+<section id="section-1">
+    <div class="wrapper">
+        <h2>Onterecht?</h2>
+        <div class="content-2" data-aos="fade-up">
+            <p>Het <span class="marker">vergelijken</span> van de gevolgen van het <span class="marker">contact van de politie
+                na benadering</span>, met of de mensen die <span class="marker">terecht of onterecht</span> vonden.
+                Hierin wordt <span class="marker">onderscheid</span> gemaakt in of de mensen wel of niet
+                een migratie achtergrond hebben.</p>
+        </div>
+
+        <div>
+            <div id='barcharts' class="flex-box">
+                <article class="flex-50" data-aos="fade-right">
+                    <h3>Nederlanders zonder migratieachtergrond</h3>
+                    <p class="barchart-1"></p>
+                </article>
+                <article class="flex-50" data-aos="fade-left">
+                    <h3>Nederlanders met migratieachtergrond</h3>
+                    <p class="barchart-2"></p>
+                </article>
+            </div>
+        </div>
+    </div>  
+</section>
+
+<section id="section-2">
+    <div class="wrapper"> 
+        <h2>Rapportcijfer</h2>
+        <div class="content-1" data-aos="fade-up"> 
+            <p>Dit zijn de <span class="marker">gemiddelde cijfers</span> betreft het rapportcijfer (tussen
+                de 1 en 10) wat de correspondenten de politie geeft over het
+                gebied van vetrouwen in de politie.</p>
+        </div>
+        <div class="flex-box sec-2">
+            <article class="flex-50" data-aos="fade-right">
+                <h3>Nederlands-Nederlanders</h3>
+                <p class="font-xxl">6.8 <span>/</span> <b>7.6</b></p>
+                <p>Door de politie benaderd / Zelf de politie benaderd</p>
+            </article>
+            <article class="flex-50" data-aos="fade-left">
+                <h3>Nederlands-Migratieachtergrond</h3>
+                <p class="font-xxl">5.6 <span>/</span> <b>8.7</b></p>
+                <p>Door de politie benaderd / Zelf de politie benaderd</p>
+            </article>
+        </div>
+        <div class="sec-2">
+            <h3  data-aos="fade-down">Nederlanders met een migratieachtergrond die zelf de polite benaderd hebben geven de politie gemiddeld
+                een <span class="marker">hoger</span> cijfer dan Nederlands-Nederlanders die zelf de politie hebben benaderd.</h3>
+        </div>
+    </div>
+</section>
+
+<section id="section-3">
+    <div class="wrapper">
+    <section id="datavis-1" class="sec-3" data-aos="fade-up">
+        <h2>Terecht of onterecht</h2>
+        <p>Hoe voelde Amsterdammers zich aangesproken?</p>
+       
+                <svg></svg>
+                <!-- <div id="population">
+                    <div>
+                        <h3 id="zeer-terecht">Zeer terecht</h3>
+                        <p id="nl-nl">Nederlandse Nederlanders</p>
+                        <p id="nl-migrratieachtergrond">Nederlanders met migratieachtergrond</p>
+                    </div>
+                </div> -->
+        
+                <nav data-filter="gevolg-contact">
+                    <button data-value="Niets">Niets</button>
+                    <button data-value="Waarschuwing">Waarschuwing</button>
+                    <button data-value="Bekeuring">Bekeuring</button>
+                    <button data-value="Arrestatie">Arrestatie</button>
+                </nav>
+    </section>
+</div>
+</section>
+<section id="section-4">
+    <div class="wrapper"> 
+        <h2>Geïnteresseerd?</h2>
+
+        <div class="content-1" data-aos="fade-up">
+            <p>Organisatie Controle Alt Delete streeft naar een politie voor en van iedereen.
+                Zij zetten zich in tegen etnisch profileren en vóór eerlijke en effectieve politiecontroles.
+                Wil je meer weten over het onderwerp entisch profileren en/of meer te weten willen komen
+                over de organistatie Controle Alt Delete? Bekijk dan hier hun website.</p>
+            <p class="img-size-1" ><img src="images/logo.svg" alt=""></p>
         </div>
         
-    </header>
-    <section id="datavis-1">
-        <div class="wrapper">
-            <svg></svg>
-            <div id="population">
-                <!-- <div>
-                    <h3 id="zeer-terecht">Zeer terecht</h3>
-                    <p id="nl-nl">Nederlandse Nederlanders</p>
-                    <p id="nl-migrratieachtergrond">Nederlanders met migratieachtergrond</p>
-                </div> -->
-            </div>
+        <div data-aos="fade-right">
+            <h2>Volg Controle Alt Delete</h2>
+            <article class="flex-box sec-4">
+                <p class="flex-50"><span><i class="fa fa-twitter-square"></i></span> <br><span>@CntrleAltDlt </span></p>
+                <p class="flex-50"><span><i class="fa fa-facebook-official"></i></span> <br><span>Controle Alt Delete</span></p>
+                <p class="flex-50"><span><i class="fa fa-youtube-square"></i></span> <br><span>Controle Alt Delete</span></h2>
+            </article>
         </div>
-        <nav data-filter="gevolg-contact">
-            <button data-value="Niets">Niets</button>
-            <button data-value="polben_gevolg_waarschuwing">Waarschuwing</button>
-            <button data-value="Bekeuring">Bekeuring</button>
-            <button data-value="Arrestatie">Arrestatie</button>
-        </nav>
-    </section>
-    <section id="barchart">
+       
+    </div>
+   
+</section>
 
-    </section>
+    
+<footer id="footer">
+    <div class="wrapper">
+            <p class="copyright">Design by | Frederique Niemer, Daniël Rios, Tomas Stolp & Deiver Zamora Cortez</p>
+    </div>
+</footer>
+
     <script src="./client-bundle.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+  // Global settings:
+  disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+  startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+  initClassName: 'aos-init', // class applied after initialization
+  animatedClassName: 'aos-animate', // class applied on animation
+  useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+  disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+  debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+  throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+  
+
+  // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+  offset: 120, // offset (in px) from the original trigger point
+  delay: 0, // values from 0 to 3000, with step 50ms
+  duration: 800, // values from 0 to 3000, with step 50ms
+  easing: 'ease', // default easing for AOS animations
+  once: false, // whether animation should happen only once - while scrolling down
+  mirror: false, // whether elements should animate out while scrolling past them
+  anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+
+});
+    </script>
 </body>
 </html>
