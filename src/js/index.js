@@ -43,11 +43,13 @@ function initDrawing(data) {
 
   const nestedRightfulness = formatData(data);
 
-  const migrationKeys = nestedMigrationBg.map(d => d.key)
+  const migrationKeys = nestedMigrationBg.map(d => d.key).sort()
   // console.log(nestedMigrationBg)
   const colorscale = d3.scaleOrdinal()
     .domain(migrationKeys)
-    .range(d3.schemeCategory10);
+    .range(['#F79824','blue']);
+
+    console.log(migrationKeys, 'hello')
 
   nestedRightfulness.forEach(e => {
     e.length = e.values.length;
@@ -87,6 +89,8 @@ function initDrawing(data) {
   // const defData = updateData(data)
 
   function updateData(data) {
+
+
     const test = d3.nest()
       .key(d => d.migratieachtergrond).entries(data);
 
@@ -176,10 +180,12 @@ function initDrawing(data) {
     }];
 
 
+
     // console.log(actualData, 'wef')
 
     const defData = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden).flat(2)
 
+    console.log(defData, 'voor Fred')
 // console.log(temp.flat(2), 'yes')
 
     // const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
@@ -338,9 +344,9 @@ function initDrawing(data) {
   console.log(data)
 
   const svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
-  // .attr("viewBox", `0 0 800 900`)
+    // .attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom)
+  .attr("viewBox", `0 0 ${window.innerWidth} 900`);
   svg.append("g");
 
 
@@ -522,16 +528,17 @@ let counter = 1;
 
     .attr('id', d => d.migratieachtergrond)
     .attr("class", "dot")
-    .attr("r", 3)
-
+    .transition().duration(2000)
+    .attr("r", 5)
+  
     .attr("cx", function (d, i) {
       console.log('enter pattern')
       // return i == 0 ? 20 : i * 20
 
-      return d.plek == 0 ? 10 : d.plek * 10
+      return d.plek == 0 ? 15 : d.plek * 15
 
     })
-    // .transition().duration(2000)
+ 
 
     .attr("cy", function (d, i, j) {
 
@@ -539,35 +546,37 @@ let counter = 1;
       //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
       // }
 
-      return d.y + (d.migratieachtergrond == 'ja' ? 5 : -5)
+      return d.y + (d.migratieachtergrond == 'ja' ? 10 : -10)
 
     })
 
 
-    .style("fill", d => colorscale(d.migratieachtergrond));
+    .style("fill", d =>  colorscale(d.migratieachtergrond));
       
     circles.data(circledata)
     .attr('id', d => d.migratieachtergrond)
     .attr("class", "dot")
     
-    .attr("r", 3);
+    .attr("r", 5)
 
 
-    circles.attr("cy", function (d, i, j) {
+    circles
+
+    .attr("cy", function (d, i, j) {
 
       // if(d.parentLength > 10){
       //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
       // }
 
-      return d.y + (d.migratieachtergrond == 'ja' ? 5 : -5)
+      return d.y + (d.migratieachtergrond == 'ja' ? 10 : -10)
 
     })
-
+    
     .attr("cx", function (d, i) {
       console.log('update pattern')
       // return i == 0 ? 20 : i * 20
 
-      return d.plek == 0 ? 10 : d.plek * 10;
+      return d.plek == 0 ? 15 : d.plek * 15
 
     })
     // .transition().duration(2000)
@@ -592,7 +601,7 @@ let counter = 1;
 
 
 
-
+  console.log(colorscale.domain(), 'wefwef')
 
   // const nestedConsequence = d3.nest()
   //   .key(d => d.polben_gevolg_controle)
@@ -677,7 +686,10 @@ let counter = 1;
       .enter()
       .append("g")
       .attr("class", "legend-item")
-      .attr('data-category', d => d)
+      .attr('data-category', d => {
+        console.log(d)
+       return  d
+      })
       .attr("transform", function (d, i) {
         return "translate(0," + i * 35 + ")";
       })
