@@ -37,12 +37,9 @@ const url = 'https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b
 
 const data = d3.csv(url)
 
-    .then(data => data.json())
-    .then(data => console.log(data));
 
-// data.then(data => data.json())
-//   .then(data => filterData(data))
-//   .then(data => initDrawing(data))
+  .then(data => filterData(data))
+  .then(data => initDrawing(data))
 
   
 
