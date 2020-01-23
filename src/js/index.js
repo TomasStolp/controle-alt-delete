@@ -116,6 +116,22 @@ function initDrawing(data) {
       .entries(test[1].values);
     // console.log(mig ,'fwef')
 
+    // const objectMig = mig.values.map(obj => {
+    //   return {
+    //     migratieachtergrond: "ja",
+    //     terechtheid: obj.key
+    //   }
+    // })
+
+    // const objectNoMig = geen_mig.map(obj => {
+    //   return {
+    //     migratieachtergrond: "nee",
+    //     terechtheid: obj.key
+        
+    //   }
+    // })
+
+    // console.log([...objectMig, ...objectNoMig])
    
 
 
@@ -162,11 +178,11 @@ function initDrawing(data) {
 
     // console.log(actualData, 'wef')
 
-    const temp = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden)
+    const defData = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden).flat(2)
 
+// console.log(temp.flat(2), 'yes')
 
-
-    const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
+    // const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
 
     const testing = defData.map(function (d) {
       // const keyLength = nestedRightfulness
@@ -377,16 +393,31 @@ function initDrawing(data) {
 
   // const array = [...Array(200).keys()];
 
+let currentlyActive = null;
+let counter = 1;
+
 
   function update(circledata) {
 
-
+  
 
     const consequenceMenu = d3.select('nav[data-filter="gevolg-contact"]');
-
+    
     consequenceMenu
       .on("click", function () {
-       event.target.classList.add("active")
+
+        if(counter % 2 == 0){
+          console.log('disabled')
+          
+        }else{
+          console.log('enabled')
+          counter = 1
+        }
+
+
+        currentlyActive = [event.target.dataset];
+        
+        event.target.classList.add("active")
         // .classed('active', true)
         const filterConsequence = data.filter(d => {
           return d[event.target.dataset.value] != "99999" && d[event.target.dataset.value] != "0";
