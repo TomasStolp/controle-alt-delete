@@ -36,14 +36,15 @@ Of je kunt het project downloaden als zip door op de groene knop, rechtsbovenaan
 ## .gitignore
 ```
 node_modules
-~~data~~
-~~dist~~
 .history
 .cache
 package-lock.json
-
 ```
-The following files are ignored when I commit.
+Deze gegevens / mappen worden niet mee gepushed naar Github.
+
+Onderstaande gegevens ondertussen wel:
+~~data~~
+~~dist~~
 
 ## Contributers
 Daniël
