@@ -62,3 +62,13 @@ MIT
 ## Credits
 Voor een opzet waarin een forced layout techniek gebruikt wordt
 [Scatterplot/Beeswarm/forceSimulation/forceCollide](https://bl.ocks.org/chloerulesok/e45c8bb1241c4f6051ef30623e6fe552)
+
+Voor de slide en fade animation content parts
+[Animate on scroll library](https://michalsnik.github.io/aos/)
+
+Voor de fontawsome icons 
+[The ZeroClipboard library](https://github.com/zeroclipboard/zeroclipboard)
+
+Voor de fonts: Robot & Rubik
+[Google Fonts](https://fonts.google.com/)
+
