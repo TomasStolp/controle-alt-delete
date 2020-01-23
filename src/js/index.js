@@ -55,7 +55,7 @@ function initDrawing(data) {
   const migrationKeys = nestedMigrationBg.map(d => d.key).sort()
   // console.log(nestedMigrationBg)
   const colorscale = d3.scaleOrdinal()
-    .domain(migrationKeys)
+    // .domain(migrationKeys)
     .range(['#F79824','blue']);
 
     console.log(migrationKeys, 'hello')
@@ -161,7 +161,7 @@ function initDrawing(data) {
             return {
               plek: e,
               terechtheid: terechtheid.key,
-              migratieachtergrond: 'ja'
+              migratieachtergrond: 'Deelnemer met migratieachtergrond'
             }
           })
 
@@ -181,7 +181,7 @@ function initDrawing(data) {
             return {
               plek: e,
               terechtheid: terechtheid.key,
-              migratieachtergrond: 'nee'
+              migratieachtergrond: 'Deelnemer zonder migratieachtergrond'
             }
           })
         }
@@ -321,8 +321,6 @@ function initDrawing(data) {
   //   .text(d => {
   //     return `${ d.key } ${d.length}`;
   //   })
-
-
 
   //  var xAxis = d3.axisBottom(x);
   const yAxis = d3.axisLeft(y);
@@ -529,43 +527,12 @@ let counter = 1;
     const circles = scatter.selectAll(".dot");
 
   
-    circles.data(circledata).exit().remove();
-
 
     circles.data(circledata)
-    .enter().append("circle")
-
     .attr('id', d => d.migratieachtergrond)
     .attr("class", "dot")
+    .attr("r", 0)
     .transition().duration(2000)
-    .attr("r", 5)
-  
-    .attr("cx", function (d, i) {
-      console.log('enter pattern')
-      // return i == 0 ? 20 : i * 20
-
-      return d.plek == 0 ? 15 : d.plek * 15
-
-    })
- 
-
-    .attr("cy", function (d, i, j) {
-
-      // if(d.parentLength > 10){
-      //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
-      // }
-
-      return d.y + (d.migratieachtergrond == 'ja' ? 10 : -10)
-
-    })
-
-
-    .style("fill", d =>  colorscale(d.migratieachtergrond));
-      
-    circles.data(circledata)
-    .attr('id', d => d.migratieachtergrond)
-    .attr("class", "dot")
-    
     .attr("r", 5)
 
 
@@ -577,7 +544,7 @@ let counter = 1;
       //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
       // }
 
-      return d.y + (d.migratieachtergrond == 'ja' ? 10 : -10)
+      return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
 
     })
     
@@ -588,18 +555,57 @@ let counter = 1;
       return d.plek == 0 ? 15 : d.plek * 15
 
     })
-    // .transition().duration(2000)
 
+    .style("fill", d => colorscale(d.migratieachtergrond))
+    .attr("r", 0)
+    .transition().duration(2000)
+    .attr("r", 5);
+
+    circles.data(circledata)
+    .enter().append("circle")
+
+    .attr('id', d => d.migratieachtergrond)
+    .attr("class", "dot")
    
+    .attr("cx", 0)
+   
+ 
+
+    .attr("cy", function (d, i, j) {
+
+      // if(d.parentLength > 10){
+      //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+      // }
+
+      return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
+
+    })
 
 
-    .style("fill", d => colorscale(d.migratieachtergrond));
+    .style("fill", d =>  colorscale(d.migratieachtergrond))
+
+    // .attr("r", 0)
+    // .transition().duration(2000)
+    .attr("r", 5)
+    .transition().delay((d, i)=> i * 3).duration(2000)
+    .attr("cx", function (d, i) {
+      console.log('enter pattern')
+      // return i == 0 ? 20 : i * 20
+
+      return d.plek == 0 ? 15 : d.plek * 15
+
+    })
+    
+    
+    ;
+      
+    
 
 
 
 
 
-
+    circles.data(circledata).exit().remove();
     
 
 
