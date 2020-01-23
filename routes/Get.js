@@ -57,10 +57,11 @@ router.get('/users', (req, res)=>{
         
         .then(data => {
             // res.json(data);
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+            res.setHeader('Access-Control-Allow-Origin', 'https://epic-mayer-5c0b28.netlify.com');
             res.header("Content-Type",'application/json');
             res.send(data)
-            res.end()
+            res.end() 
+            
         })
 
 })
