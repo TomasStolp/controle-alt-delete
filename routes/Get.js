@@ -60,7 +60,8 @@ router.get('/users', (req, res)=>{
             res.setHeader('Access-Control-Allow-Origin', 'https://epic-mayer-5c0b28.netlify.com');
             res.header("Content-Type",'application/json');
             res.send(data)
-            res.end()
+            res.end() 
+            
         })
 
 })
