@@ -26,7 +26,7 @@ var width = 1230 - margin.left - margin.right;
 
 var height = 500 - margin.top - margin.bottom;
 
-const data = fetch('http://localhost:4000/api/get/users');
+const data = fetch('/api/get/users');
 
 data.then(data => data.json())
   .then(data => filterData(data))
