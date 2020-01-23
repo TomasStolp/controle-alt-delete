@@ -3,13 +3,11 @@
 	--yellow: #FFF33D;
 	--white: #fff;
 }
-
 * {
 	box-sizing: border-box;
 	font-size: 1em;
 	font-family: 'Rubik','Roboto', sans-serif,"Montserrat";
 }
-
 html,
 body {
 	margin: 0;
@@ -18,16 +16,13 @@ body {
 	background-color: #000;
 	color: var(--white);
 }
-
 header {
 	padding: 1rem;
 }
-
 .banner {
 	max-width: 30rem;
 	margin: 0 auto;
 }
-
 .banner p span {
 	color: var(--yellow);
 }
@@ -63,15 +58,12 @@ li {
 #scatterplot rect {
 	fill: #191919;
 }
-
 svg>g {
 	transform: translate(236px, 0px);
 }
-
 /* #datavis-1 {
 	margin-left: 3rem;
 } */
-
 #population {
 	margin-bottom: 4rem;
 	height: 30rem;
@@ -83,16 +75,13 @@ svg>g {
 .legend-container {
 	transform: translate(80px, 10px);
 }
-
 .tick line {
 	opacity: 0.3;
 }
-
 /* .wrapper {
 	display: flex;
     flex-direction: row;
 } */
-
 /* / DEIVER / */
 .wrapper {
     margin: 0 5%;
@@ -107,12 +96,10 @@ h2 {
 .sec-4 p span:nth-of-type(2) {
     font-size: 20px;
 }
-
 h3{
     font-size: 1.5em;
     margin: 0.5em 0 0 0;
     line-height: 1.5em;
-
 }
 p{
     font-size: 1.15rem;
@@ -134,7 +121,6 @@ p{
 .sec-2:nth-of-type(3) h3{
     color: yellow;
 }
-
 p .marker{
     background-color: yellow;
     color: black!important;
@@ -171,17 +157,14 @@ footer {
     border-top: solid white 1px;
 }
 /* / END / */
-
 body {
 	background-color: #000;
 }
-
 @media screen and (orientation:landscape) {
 	body {
 		background-color: #000;
 	}
 }
-
 nav {
 	/* display: flex;
     width: 100%;
@@ -189,16 +172,13 @@ nav {
 	/* display: inline-block; */
 	position: relative;
 }
-
 nav[data-filter="gevolg-contact"] {
 	/* max-width: 63rem; */
 	margin: 1em 0;
 }
-
 header nav img {
 	width: 10rem;
 }
-
 button {
 	background-color: #0e0e0e;
 	color: rgba(255, 255, 255, 0.4);
@@ -211,23 +191,16 @@ button {
 	transition: box-shadow .3s, transform .3s;
 	cursor: pointer;
 }
-
-
 /* button:hover::after{
    content: '';
    transition: all .5s;
    width: 15em;
    position: absolute;
    bottom: 0;
-
    height: 1rem;
-
     /* border-bottom: 1rem solid black; */
-
-
 /*  background-color: yellow;
 } */
-
 button:hover,
 button:active,
 button:focus {
@@ -238,20 +211,14 @@ button:focus {
 	transform: translate(0px, -10px);
 	background-color: rgb(41, 41, 41);
 }
-
-
 @media only screen and (max-width: 40em) {
     p {
         font-size: 1rem;
-      
     }
-
     h2{
         font-size: 2.3rem;
         margin-bottom: 0.7em;
     }
-
-
     .content-1, .content-2, .flex-box {
         display: flex;
         width: 100%;
@@ -261,5 +228,4 @@ button:focus {
         width: 100%;
         margin: 0.5em 0;
     }
-
   }
