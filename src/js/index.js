@@ -24,7 +24,7 @@ var width = 1230 - margin.left - margin.right;
 
 var height = 500 - margin.top - margin.bottom;
 
-const data = fetch('https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b1913658ebd/raw/3c219e0bde4f5b1655e42ab73b9091bd5af11233/gistfile1.txt',{
+const data = fetch('https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b1913658ebd/raw/3c219e0bde4f5b1655e42ab73b9091bd5af11233/gistfile1.csv',{
 headers : { 
   'Content-Type': 'application/json',
   'Accept': 'application/json'
