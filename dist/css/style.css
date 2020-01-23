@@ -1,8 +1,22 @@
+
 :root {
 	--black: #000;
-	--yellow: #FFF33D;
+	--yellow: #faf49f;
 	--white: #fff;
 }
+
+.yellow{
+    color: #faf49f;
+}
+
+.orange{
+    color: #f79824;
+}
+
+.blue{
+    color: #0048ff;
+}
+
 * {
 	box-sizing: border-box;
 	font-size: 1em;
@@ -83,27 +97,47 @@ svg>g {
     flex-direction: row;
 } */
 /* / DEIVER / */
+
+.section-0 {
+    background-image: url(https://raw.githubusercontent.com/TomasS666/controle-alt-delete/master/dist/images/img-background.png);
+    padding: 2em 0;
+}
 .wrapper {
     margin: 0 5%;
+}
+a:hover {
+    color: #0048ff;
+    transition:all 0.3s ease;
+
+}
+a {
+    color: #faf49f;
+    transition:all 0.3s ease;
 } 
+
+a:hover {
+    color: blue;
+}
+
 h2 {
     font-size: 4rem;
     margin: 1em 0 0.5em 0;
 }
 .sec-4 p span:nth-of-type(1) {
-    font-size: 9em;
+    font-size: 2em;
 }
 .sec-4 p span:nth-of-type(2) {
     font-size: 20px;
 }
 h3{
     font-size: 1.5em;
-    margin: 0.5em 0 0 0;
+    margin: 1.5em 0 2em 0;
     line-height: 1.5em;
 }
 p{
     font-size: 1.15rem;
     line-height: 1.6em;
+    letter-spacing: 1px;
 }
 .content-1, .content-2, .flex-box {
     display: flex;
@@ -119,12 +153,13 @@ p{
     font-size: 1.4em;
 }
 .sec-2:nth-of-type(3) h3{
-    color: yellow;
+    color:#faf49f;
 }
 p .marker{
-    background-color: yellow;
+    background-color:#faf49f;
     color: black!important;
     padding: 1px;
+    padding: 0 6px !important;
 }
 .flex-50{
     width: 50%;
@@ -148,6 +183,15 @@ p .marker{
     position: relative;
     width: 100%;
     height: inherit;
+}
+.barchart-1 img, .barchart-2 img {
+    position: relative;
+    width: 90%;
+}
+
+.section-0 img {
+    height: 5em;
+    margin: 4em 0;
 }
 .copyright{
     font-size: 1em;
@@ -211,14 +255,62 @@ button:focus {
 	transform: translate(0px, -10px);
 	background-color: rgb(41, 41, 41);
 }
+
+@media only screen and (min-width: 40em) {
+    .sec-3-mobile {
+        display: none;
+    }
+}
+
+
 @media only screen and (max-width: 40em) {
+    #section-3 {
+        display: none;
+    }
     p {
         font-size: 1rem;
     }
+
+    .sec-3-mobile article p {
+        margin: 0 0 0.5em 0;
+    }
+
     h2{
         font-size: 2.3rem;
         margin-bottom: 0.7em;
     }
+
+    p.img-size-1 {
+        display: none;
+    }
+    .section-0 img {
+        height: 5em;
+        width: 10%;
+    }
+    .flex-box-dv {
+        display: flex;
+        width: 30%;
+        flex-direction: row;
+        margin-right: 0.5em;
+    }
+    button {
+        background-color: #0000;
+        color: #fff;
+        padding: 1em 1em 1em 1em;
+        font-size: 1em;
+        font-weight: bold;
+        width: 100%;
+        margin: 0 0 0 0;
+        transition: box-shadow .3s, transform .3s;
+        cursor: pointer;
+        position: relative;
+        border: solid 1px #ffff;
+    }
+    .active {
+        background: #fff;
+        color: #000;
+    }
+
     .content-1, .content-2, .flex-box {
         display: flex;
         width: 100%;
@@ -228,4 +320,10 @@ button:focus {
         width: 100%;
         margin: 0.5em 0;
     }
+
+    .section-0 img {
+        margin: 0em 0;
+    }
+
+
   }
