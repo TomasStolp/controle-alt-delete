@@ -2,7 +2,7 @@
 
 
 ## Demo Datavis
-[Find it here](https://frontend-data-tomas.netlify.com/)
+[Find it here](https://epic-mayer-5c0b28.netlify.com/)
 
 # Controle Alt Delete - Datavisuals voor meer inzichtelijkheid
 Data Visualisations on ethnic profiling
