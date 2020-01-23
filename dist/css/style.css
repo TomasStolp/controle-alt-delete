@@ -319,7 +319,6 @@ button:focus {
         padding: 1em 1em 1em 1em;
         font-size: 1em;
         font-weight: bold;
-        width: 100%;
         margin: 0 0 0 0;
         transition: box-shadow .3s, transform .3s;
         cursor: pointer;
