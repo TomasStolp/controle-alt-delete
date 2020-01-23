@@ -30,28 +30,32 @@
                 <span>ongeacht zijn of haar afkomst</span></p>
             </div>
     </header>
-
-<section>
+<section class="section-0">
     <div class="wrapper"> 
         <h2>Etnisch Profileren</h2>
             <div class="content-1" data-aos="fade-up">
+                <img src="images/amnesty-logo.png" alt="">
                 <p>Etnisch profileren is een vorm van discriminatie en daarom in
                     strijd met de mensenrechten. Wanneer de politie zonder goede
                     of geldige reden iemand stopt, controleert, fouilleert of aanhoudt,
                     (mede) vanwege zijn huidkleur of herkomst is er sprake van etnisch
                     profileren.<span><br>— Amnesty International</span>
                 </p>
-                <p class="img-size-1"><img src="images/picture-1.jpg" alt=""></p>
+                <p class="img-size-1"></p>
             </div>
 
             <div class="content-2" data-aos="fade-up">
-                <p class="img-size-1"><img src="images/picture-2.jpg" alt=""></p>
+                <p class="img-size-1"></p>
                 <p>Organisatie <span class="marker">CTRL ALT DELETE</span> heeft een enquete gehouden in
                 Amsterdam over het onderwerp etnisch profileren. Uit de enquete
                 bleek dat 485 mensen van de 1900 ondervraagde daadwerkelijk
                 contact hadden met de politie in de afgelopen 12 maanden.
                 Hierop hebben wij onze datavisualisaties gebaseerd.</p>
 
+                <img src="images/ctrlaltdel-logo.png" alt="">
+                
+            </div>
+    </div>
 </section>
 <section>
 <section id="section-1">
@@ -63,16 +67,15 @@
                 Hierin wordt <span class="marker">onderscheid</span> gemaakt in of de mensen wel of niet
                 een migratie achtergrond hebben.</p>
         </div>
-
         <div>
             <div id='barcharts' class="flex-box">
                 <article class="flex-50" data-aos="fade-right">
                     <h3>Nederlanders zonder migratieachtergrond</h3>
-                    <p class="barchart-1"></p>
+                    <p class="barchart-1"><img src="images/politieaangesprTekengebied-1.png" alt=""></p>
                 </article>
                 <article class="flex-50" data-aos="fade-left">
                     <h3>Nederlanders met migratieachtergrond</h3>
-                    <p class="barchart-2"></p>
+                    <p class="barchart-2"><img src="images/zelfnaarpolitieTekengebied-1.png" alt=""></p>
                 </article>
             </div>
         </div>
@@ -85,17 +88,17 @@
         <div class="content-1" data-aos="fade-up"> 
             <p>Dit zijn de <span class="marker">gemiddelde cijfers</span> betreft het rapportcijfer (tussen
                 de 1 en 10) wat de correspondenten de politie geeft over het
-                gebied van vetrouwen in de politie.</p>
+                gebied van <span class="marker">vetrouwen in de politie.</span></p>
         </div>
         <div class="flex-box sec-2">
             <article class="flex-50" data-aos="fade-right">
                 <h3>Nederlands-Nederlanders</h3>
-                <p class="font-xxl">6.8 <span>/</span> <b>7.6</b></p>
+                <p class="font-xxl">6.8 <span class="blue">/</span> <b>7.6</b></p>
                 <p>Door de politie benaderd / Zelf de politie benaderd</p>
             </article>
             <article class="flex-50" data-aos="fade-left">
                 <h3>Nederlands-Migratieachtergrond</h3>
-                <p class="font-xxl">5.6 <span>/</span> <b>8.7</b></p>
+                <p class="font-xxl">5.6 <span class="orange">/</span> <b>8.7</b></p>
                 <p>Door de politie benaderd / Zelf de politie benaderd</p>
             </article>
         </div>
@@ -108,30 +111,48 @@
 
 <section id="section-3">
     <div class="wrapper">
-    <section id="datavis-1" class="sec-3" data-aos="fade-up">
-        <h2>Terecht of onterecht</h2>
-        <p>Hoe voelde Amsterdammers zich aangesproken?</p>
-
-                <svg></svg>
-                <!-- <div id="population">
-                    <div>
-                        <h3 id="zeer-terecht">Zeer terecht</h3>
-                        <p id="nl-nl">Nederlandse Nederlanders</p>
-                        <p id="nl-migrratieachtergrond">Nederlanders met migratieachtergrond</p>
-                    </div>
-                </div> -->
-
-                <nav data-filter="gevolg-contact">
-                    <button data-value="Niets">Niets</button>
-                    <button data-value="polben_gevolg_waarschuwing">Waarschuwing</button>
-                    <button data-value="polben_gevolg_bekeuring">Bekeuring</button>
-                    <button data-value="Polben_arrestatie">Arrestatie</button>
-
-
-                </nav>
-    </section>
-</div>
+        <section id="datavis-1" class="sec-3" data-aos="fade-up">
+            <h2>Terecht of onterecht</h2>
+            <p>Hoe voelde Amsterdammers zich aangesproken?</p>
+        
+                    <svg></svg>
+                    <!-- <div id="population">
+                        <div>
+                            <h3 id="zeer-terecht">Zeer terecht</h3>
+                            <p id="nl-nl">Nederlandse Nederlanders</p>
+                            <p id="nl-migrratieachtergrond">Nederlanders met migratieachtergrond</p>
+                        </div>
+                    </div> -->
+            
+                    <nav data-filter="gevolg-contact">
+                        <button data-value="Niets">Niets</button>
+                        <button data-value="Waarschuwing">Waarschuwing</button>
+                        <button data-value="Bekeuring">Bekeuring</button>
+                        <button data-value="Arrestatie">Arrestatie</button>
+                    </nav>
+        </section>
+    </div>
 </section>
+
+<section class="sec-3-mobile" data-aos="fade-up">
+    <div class="wrapper">
+        <h2>Voelde Amsterdammers zich terecht of onterecht aangesproken?</h2>
+        <p><i class="fa fa-circle blue"></i> Nederlanders zonder migratieachtergrond</p>
+        <p><i class="fa fa-circle orange"></i> Nederlanders met migratieachtergrond</p>
+        <p>Wat was het gevolg na het contact met de politie?</p>
+        <article data-aos="fade-up">
+            <p>Filter</p>
+            <nav data-filter="gevolg-contact-mobile" class="flex-box-dv">
+                <button data-value="Waarschuwing">Waarschuwing</button>
+                <button data-value="Bekeuring">Bekeuring</button>
+                <button data-value="Arrestatie">Arrestatie</button>
+            </nav>
+            <img src="images/geen-filter.png" alt="">
+        </article>
+    </div>
+
+</section>
+
 <section id="section-4">
     <div class="wrapper"> 
         <h2>Geïnteresseerd?</h2>
@@ -139,15 +160,15 @@
             <p>Organisatie Controle Alt Delete streeft naar een politie voor en van iedereen.
                 Zij zetten zich in tegen etnisch profileren en vóór eerlijke en effectieve politiecontroles.
                 Wil je meer weten over het onderwerp entisch profileren en/of meer te weten willen komen
-                over de organistatie Controle Alt Delete? Bekijk dan hier hun website.</p>
+                over de organistatie Controle Alt Delete? <a href="https://controlealtdelete.nl/">Bekijk dan hier hun website.</a></p>
             <p class="img-size-1" ><img src="images/logo.svg" alt=""></p>
         </div>
         <div data-aos="fade-right">
             <h2>Volg Controle Alt Delete</h2>
             <article class="flex-box sec-4">
-                <p class="flex-50"><span><i class="fa fa-twitter-square"></i></span> <br><span>@CntrleAltDlt </span></p>
-                <p class="flex-50"><span><i class="fa fa-facebook-official"></i></span> <br><span>Controle Alt Delete</span></p>
-                <p class="flex-50"><span><i class="fa fa-youtube-square"></i></span> <br><span>Controle Alt Delete</span></h2>
+                <p class="flex-50"><a href="https://twitter.com/CntrleAltDlt"><span><i class="fa fa-twitter-square"></i></span><span> @CntrleAltDlt</span></a></p>
+                <p class="flex-50"><a href="https://www.facebook.com/controlealtdelete"><span><i class="fa fa-facebook-official"></i></span><span> Controle Alt Delete</span></a></p>
+                <p class="flex-50"><a href="https://www.youtube.com/user/dedoetank"><span><i class="fa fa-youtube-square"></i></span><span> Controle Alt Delete</span></a></h2>
             </article>
         </div>
 
