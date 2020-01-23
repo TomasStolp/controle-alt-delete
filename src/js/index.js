@@ -35,7 +35,7 @@ const url = 'https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b
 // });
 
 
-const data = d3.csv(url, callback)
+const data = d3.csv(url)
 
     .then(data => data.json())
     .then(data => console.log(data));
