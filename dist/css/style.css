@@ -77,6 +77,11 @@ li {
     color: var(--yellow);
 }
 
+#population-number{
+    text-align: center;
+    font-size: 1.4rem;
+}
+
 svg>g {
 	transform: translate(236px, 0px);
 }
