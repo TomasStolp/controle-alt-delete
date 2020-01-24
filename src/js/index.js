@@ -20,9 +20,9 @@ const margin = {
   left: 5
 };
 
-var width = 1230 - margin.left - margin.right;
+var width = 1100 - margin.left - margin.right;
 
-var height = 500 - margin.top - margin.bottom;
+var height = 900 - margin.top - margin.bottom;
 
 const url = 'https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b1913658ebd/raw/29ee53cf993bc82a481a65fd3df7075b75417f2a/gistfile1.csv';
 
@@ -36,12 +36,8 @@ const url = 'https://gist.githubusercontent.com/TomasS666/d025078bea79fa178ee14b
 
 
 const data = d3.csv(url)
-
-
   .then(data => filterData(data))
   .then(data => initDrawing(data))
-
-  
 
 function initDrawing(data) {
 
@@ -56,9 +52,9 @@ function initDrawing(data) {
   // console.log(nestedMigrationBg)
   const colorscale = d3.scaleOrdinal()
     // .domain(migrationKeys)
-    .range(['#F79824','blue']);
+    .range(['#F79824', 'blue']);
 
-    console.log(migrationKeys, 'hello')
+  console.log(migrationKeys, 'hello')
 
   nestedRightfulness.forEach(e => {
     e.length = e.values.length;
@@ -103,14 +99,18 @@ function initDrawing(data) {
     const test = d3.nest()
       .key(d => d.migratieachtergrond).entries(data);
 
-      console.log(test, 'ewfwef')
+   
 
     // data.forEach(e => e.parentLength = elem.values.length)
     test.forEach(elem => elem.values.forEach(e => e.parentLength = elem.values.length))
     // console.log(test.values)
-
+ 
     const mig = d3.nest()
       .key(d => d.stel_terecht)
+      .sortKeys(function (a, b) {
+        // console.log(priority_order[(priority_order.indexOf(a) - priority_order.indexOf(b))])
+        return priority_order.indexOf(a) - priority_order.indexOf(b);
+      })
       .rollup(v => {
         return Math.ceil((100 / v[0].parentLength) * v.length)
       })
@@ -120,6 +120,10 @@ function initDrawing(data) {
 
     const geen_mig = d3.nest()
       .key(d => d.stel_terecht)
+      .sortKeys(function (a, b) {
+        // console.log(priority_order[(priority_order.indexOf(a) - priority_order.indexOf(b))])
+        return priority_order.indexOf(a) - priority_order.indexOf(b);
+      })
       .rollup(v => {
         // console.log(v)
 
@@ -127,25 +131,33 @@ function initDrawing(data) {
 
       })
       .entries(test[1].values);
+
+
+
     // console.log(mig ,'fwef')
 
-    // const objectMig = mig.values.map(obj => {
-    //   return {
-    //     migratieachtergrond: "ja",
-    //     terechtheid: obj.key
-    //   }
-    // })
+    const objectMig = mig.map(obj => {
+      return {
+        migratieachtergrond: "ja",
+        terechtheid: obj.key,
+        percentage: obj.value
+      }
+    })
 
-    // const objectNoMig = geen_mig.map(obj => {
-    //   return {
-    //     migratieachtergrond: "nee",
-    //     terechtheid: obj.key
-        
-    //   }
-    // })
+    const objectNoMig = geen_mig.map(obj => {
+      return {
+        migratieachtergrond: "nee",
+        terechtheid: obj.key,
+        percentage: obj.value
+      }
+    })
+
+    
+    const percentageData = [...objectMig, ...objectNoMig];
+    updatePopulation(percentageData)
 
     // console.log([...objectMig, ...objectNoMig])
-   
+
 
 
     const actualData = [{
@@ -190,12 +202,14 @@ function initDrawing(data) {
 
 
 
+
+
     // console.log(actualData, 'wef')
 
     const defData = [...actualData[0].waarden, ...actualData[1].waarden].map(e => e.waarden).flat(2)
 
     console.log(defData, 'voor Fred')
-// console.log(temp.flat(2), 'yes')
+    // console.log(temp.flat(2), 'yes')
 
     // const defData = [...temp[0], ...temp[1], ...temp[2], ...temp[3], ...temp[4], ...temp[5], ...temp[6], ...temp[7], ...temp[8], ...temp[9]];
 
@@ -279,29 +293,29 @@ function initDrawing(data) {
 
   // console.log(doubleNest)
 
-  const population = d3.select("#population");
+  // const population = d3.select("#population");
 
-  const selection = population.selectAll("div")
-    .data(doubleNest)
-    .enter().append("div");
+  // const selection = population.selectAll("div")
+  //   .data(doubleNest)
+  //   .enter().append("div");
 
-  selection.append("h3")
-    // .data(nestedRightfulness)
-    // .enter().append("h3")
-    .text(d => {
-      return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
-    });
-  selection.append("p")
-    .text(d => {
-      // console.log(d.values[0].values.length)
-      // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
-      return `Nederlandse Nederlanders ${d.values[0].values.length}`;
-    });
-  selection.append("p")
+  // selection.append("h3")
+  //   // .data(nestedRightfulness)
+  //   // .enter().append("h3")
+  //   .text(d => {
+  //     return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+  //   });
+  // selection.append("p")
+  //   .text(d => {
+  //     // console.log(d.values[0].values.length)
+  //     // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
+  //     return `Nederlandse Nederlanders ${d.values[0].values.length}`;
+  //   });
+  // selection.append("p")
 
-    .text(d => {
-      return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
-    });
+  //   .text(d => {
+  //     return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
+  //   });
 
 
   // .select('p')
@@ -351,13 +365,13 @@ function initDrawing(data) {
   console.log(data)
 
   const svg = d3.select("svg")
-    // .attr("width", width + margin.left + margin.right)
+    .attr("width", width + margin.left + margin.right)
     // .attr("height", height + margin.top + margin.bottom)
-  .attr("viewBox", `0 0 ${window.innerWidth} 900`);
+    .attr("viewBox", `0 0 1800 1000`);
   svg.append("g");
 
 
-  
+
 
   var scatter = svg.append("g");
   scatter.attr("id", "scatterplot");
@@ -406,30 +420,30 @@ function initDrawing(data) {
 
   // const array = [...Array(200).keys()];
 
-let currentlyActive = null;
-let counter = 1;
+  let currentlyActive = null;
+  let counter = 1;
 
 
   function update(circledata) {
 
-  
+
 
     const consequenceMenu = d3.select('nav[data-filter="gevolg-contact"]');
-    
+
     consequenceMenu
       .on("click", function () {
 
-        if(counter % 2 == 0){
+        if (counter % 2 == 0) {
           console.log('disabled')
-          
-        }else{
+
+        } else {
           console.log('enabled')
           counter = 1
         }
 
 
         currentlyActive = [event.target.dataset];
-        
+
         event.target.classList.add("active")
         // .classed('active', true)
         const filterConsequence = data.filter(d => {
@@ -526,87 +540,84 @@ let counter = 1;
 
     const circles = scatter.selectAll(".dot");
 
-  
+
 
     circles.data(circledata)
-    .attr('id', d => d.migratieachtergrond)
-    .attr("class", "dot")
-    .attr("r", 0)
-    .transition().duration(2000)
-    .attr("r", 5)
+      .attr('id', d => d.migratieachtergrond)
+      .attr("class", "dot")
+      .attr("r", 0)
+      .transition().duration(2000)
+      .attr("r", 5)
 
 
     circles
 
-    .attr("cy", function (d, i, j) {
+      .attr("cy", function (d, i, j) {
 
-      // if(d.parentLength > 10){
-      //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
-      // }
+        // if(d.parentLength > 10){
+        //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+        // }
 
-      return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
+        return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
 
-    })
-    
-    .attr("cx", function (d, i) {
-      console.log('update pattern')
-      // return i == 0 ? 20 : i * 20
+      })
 
-      return d.plek == 0 ? 15 : d.plek * 15
+      .attr("cx", function (d, i) {
+        console.log('update pattern')
+        // return i == 0 ? 20 : i * 20
 
-    })
+        return d.plek == 0 ? 15 : d.plek * 15
 
-    .style("fill", d => colorscale(d.migratieachtergrond))
-    .attr("r", 0)
-    .transition().duration(2000)
-    .attr("r", 5);
+      })
+
+      .style("fill", d => colorscale(d.migratieachtergrond))
+      .attr("r", 0)
+      .transition().duration(2000)
+      .attr("r", 5);
 
     circles.data(circledata)
-    .enter().append("circle")
+      .enter().append("circle")
 
-    .attr('id', d => d.migratieachtergrond)
-    .attr("class", "dot")
-   
-    .attr("cx", 0)
-   
- 
+      .attr('id', d => d.migratieachtergrond)
+      .attr("class", "dot")
 
-    .attr("cy", function (d, i, j) {
-
-      // if(d.parentLength > 10){
-      //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
-      // }
-
-      return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
-
-    })
+      .attr("cx", 0)
 
 
-    .style("fill", d =>  colorscale(d.migratieachtergrond))
 
-    // .attr("r", 0)
-    // .transition().duration(2000)
-    .attr("r", 5)
-    .transition().delay((d, i)=> i * 3).duration(2000)
-    .attr("cx", function (d, i) {
-      console.log('enter pattern')
-      // return i == 0 ? 20 : i * 20
+      .attr("cy", function (d, i, j) {
 
-      return d.plek == 0 ? 15 : d.plek * 15
+        // if(d.parentLength > 10){
+        //     return d.y + (d.migratieachtergrond == 'Deelnemers met migratieachtergrond' ? 15 : 0)
+        // }
 
-    })
-    
-    
-    ;
-      
-    
+        return d.y + (d.migratieachtergrond == 'Deelnemer zonder migratieachtergrond' ? 10 : -10)
+
+      })
+
+
+      .style("fill", d => colorscale(d.migratieachtergrond))
+
+      // .attr("r", 0)
+      // .transition().duration(2000)
+      .attr("r", 5)
+      .transition().delay((d, i) => i * 3).duration(2000)
+      .attr("cx", function (d, i) {
+        console.log('enter pattern')
+        // return i == 0 ? 20 : i * 20
+
+        return d.plek == 0 ? 15 : d.plek * 15
+
+      });
+
+
 
 
 
 
 
     circles.data(circledata).exit().remove();
-    
+
 
 
 
@@ -623,6 +634,51 @@ let counter = 1;
   //   .entries(data);
 
   // console.log(nestedConsequence)
+
+console.log(doubleNest, 'hmm')
+  function updatePopulation(populationData){
+
+    
+    const percentages = d3.nest()
+    .key(d => d.terechtheid)
+    .rollup(v => {
+      
+      return d3.sum(v, function(d) { return d.percentage; })
+    })
+    .entries(populationData)
+    console.log(percentages, 'percentages??')
+   
+
+     const population = d3.select("#population");
+
+  const containers = population.selectAll("div")
+    .data(doubleNest)
+    .enter().append("div");
+
+  const selection = d3.select("#population").selectAll("div").data(percentages);
+
+   selection .enter()
+
+  selection.append("h3")
+    // .data(nestedRightfulness)
+    // .enter().append("h3")
+    .html(d => {
+      // return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+      return `${ d.key } : <span class="marker">${d.value} %</span>  ` ;
+    });
+  selection.append("p")
+    .text(d => {
+      // console.log(d.values[0].values.length)
+      // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
+      return d.migratieachtergrond == 'nee' ? d.percentage : null;
+    });
+  selection.append("p")
+
+    .text(d => {
+      return d.migratieachtergrond == 'nee' ? d.percentage : null;
+      return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
+    });
+  }
 
   function selectData(category) {
 
@@ -703,7 +759,7 @@ let counter = 1;
       .attr("class", "legend-item")
       .attr('data-category', d => {
         console.log(d)
-       return  d
+        return d
       })
       .attr("transform", function (d, i) {
         return "translate(0," + i * 35 + ")";
@@ -735,3 +791,13 @@ let counter = 1;
   }
 
 }
+
+
+const mobileButtons = d3.select('nav[data-filter="gevolg-contact-mobile"]');
+const img = document.querySelector("#mobile-vis-img");
+
+mobileButtons.on("click", d =>{
+  console.log(img)
+  img.src = `images/${event.target.dataset.value }.png`;
+})
+
