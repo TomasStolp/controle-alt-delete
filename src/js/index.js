@@ -92,9 +92,24 @@ function initDrawing(data) {
 
   // console.log(doubleNest)
   // const defData = updateData(data)
+  const populationNumber = d3.select('#population-number');
+
+  
+  populationNumber
+  .select("#geheel")
+    .html(data.length);
+
 
   function updateData(data) {
 
+   
+
+    populationNumber
+      .select("#deel")
+        .html(data.length);
+
+      
+      
 
     const test = d3.nest()
       .key(d => d.migratieachtergrond).entries(data);
@@ -646,38 +661,46 @@ console.log(doubleNest, 'hmm')
       return d3.sum(v, function(d) { return d.percentage; })
     })
     .entries(populationData)
-    console.log(percentages, 'percentages??')
+    // console.log(percentages, 'percentages??')
    
 
      const population = d3.select("#population");
 
-  const containers = population.selectAll("div")
-    .data(doubleNest)
+  const containers = population.selectAll("div");
+
+    containers.data(doubleNest)
     .enter().append("div");
 
-  const selection = d3.select("#population").selectAll("div").data(percentages);
+console.log(d3.select("#population").selectAll("div"))
 
-   selection .enter()
+  const selection = d3.select("#population").selectAll("div > h3").data(percentages);
 
-  selection.append("h3")
+  selection
+  .html(d => {
+    // return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
+    return `${ d.key } : <span class="marker">${d.value / 2} %</span>  ` ;
+  });
+
+  
+   selection.enter()
+    .append("h3")
     // .data(nestedRightfulness)
     // .enter().append("h3")
     .html(d => {
       // return `${ d.key } ${Math.round((100 /data.length) * d.length)}%`;
-      return `${ d.key } : <span class="marker">${d.value} %</span>  ` ;
+      return `${ d.key } : <span class="marker">${d.value / 2} %</span>  ` ;
     });
-  selection.append("p")
-    .text(d => {
-      // console.log(d.values[0].values.length)
-      // return `Nederlandse Nederlanders ${Math.round((100 / d.values[0].values.length) * d.length)}%`;
-      return d.migratieachtergrond == 'nee' ? d.percentage : null;
-    });
-  selection.append("p")
 
-    .text(d => {
-      return d.migratieachtergrond == 'nee' ? d.percentage : null;
-      return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
-    });
+
+    selection.exit().remove()
+
+
+
+  // selection.append("p")
+  //   .text(d => {
+  //     return d.migratieachtergrond == 'nee' ? d.percentage : null;
+  //     return `Nederlanders met een migratieachtergrond ${d.values[1].values.length}`;
+  //   });
   }
 
   function selectData(category) {
