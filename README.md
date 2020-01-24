@@ -1,3 +1,5 @@
+![website](https://raw.githubusercontent.com/TomasS666/controle-alt-delete/version-1.0-def/dist/images/website.png)
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ae62e8a3-589d-4c6a-8397-3a5bc4c3e027/deploy-status)](https://app.netlify.com/sites/epic-mayer-5c0b28/deploys)
 
 
@@ -12,6 +14,8 @@ Dit project is opgezet in opdracht van de organisatie Controle Alt Delete en die
 
 ## Concept
 Het doel van de visualisaties is om inzicht te bieden over de omvang van de etnisch profileren. Dit proberen wij echter op een manier te doen die het onafhankelijk onderzoek complimenteert door te kiezen voor een datavisualisatie die iets meer exploratief is i.p.v. statisch. De 2 visualisaties dekken een aantal indicatoren / onderwerpen die volgens Controle Alt Delete een relatie zouden kunnen hebben met etnisch profileren.
+![website](https://raw.githubusercontent.com/TomasS666/controle-alt-delete/version-1.0-def/dist/images/data-viz1-rm.png)
+![website](https://raw.githubusercontent.com/TomasS666/controle-alt-delete/version-1.0-def/dist/images/data-viz2-rm.png)
 
 ## Doelgroep
 De website met datavisualisaties is in eerste instantie bedoelt voor Controle Alt Delete om uit al die data wat inzicht te brengen. Maar met die bepaalde inzichten is het natuurlijk de bedoeling om de bezoekers van Controle Alt Delete te bereiken en mogelijk meer mensen.
