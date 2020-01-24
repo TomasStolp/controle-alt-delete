@@ -114,19 +114,35 @@
 <section id="section-3">
     <div class="wrapper">
         <section id="datavis-1" class="sec-3" data-aos="fade-up">
+
             <h2>Voelde Amsterdammers zich terecht of onterecht aangesproken?</h2>
         <p>Wat was het gevolg na het contact met de politie?</p>
-                    <svg></svg>
+
+            <p id="population-number"><span id="deel"></span> / <span id="geheel"></span></p>
+                    <div id="chart">
+                        <svg></svg>
+                        <div id="population">
+                         
+                        </div>
+
+                    </div>
 
                     <nav data-filter="gevolg-contact">
                         <button data-value="Niets">Niets</button>
-                        <button data-value="Waarschuwing">Waarschuwing</button>
-                        <button data-value="Bekeuring">Bekeuring</button>
-                        <button data-value="Arrestatie">Arrestatie</button>
+                        <button data-value="polben_gevolg_waarschuwing">Waarschuwing</button>
+                        <button data-value="polben_gevolg_bekeuring">Bekeuring</button>
+                        <button data-value="Polben_arrestatie">Arrestatie</button>
                     </nav>
+
+
         </section>
     </div>
 </section>
+
+
+                </nav>
+    </section>
+</div>
 
 <section class="sec-3-mobile" data-aos="fade-up">
     <div class="wrapper">
@@ -137,13 +153,14 @@
         <article data-aos="fade-up">
             <p>Filter</p>
             <nav data-filter="gevolg-contact-mobile" class="flex-box-dv">
-                <button data-value="Waarschuwing">Waarschuwing</button>
-                <button data-value="Bekeuring">Bekeuring</button>
-                <button data-value="Arrestatie">Arrestatie</button>
+                <button data-value="waarschuwing">Waarschuwing</button>
+                <button data-value="bekeuring">Bekeuring</button>
+                <button data-value="arrestatie">Arrestatie</button>
             </nav>
-            <img src="images/geen-filter.png" alt="">
+            <img id="mobile-vis-img" src="images/geen-filter.png" alt="">
         </article>
     </div>
+
 
 </section>
 

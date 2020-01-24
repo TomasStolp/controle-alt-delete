@@ -72,16 +72,46 @@ li {
 #scatterplot rect {
 	fill: #191919;
 }
+
+.marker{
+    color: var(--yellow);
+}
+
+#population-number{
+    text-align: center;
+    font-size: 1.4rem;
+}
+
 svg>g {
 	transform: translate(236px, 0px);
 }
-/* #datavis-1 {
-	margin-left: 3rem;
-} */
+#datavis-1 svg {
+	margin: 0 -6rem;
+}
+
+#chart{
+    display: flex;
+    align-items: center;
+}
+
+#chart div h3{
+    font-size: 1rem;
+    margin: 0;
+}
+
+#chart div p{
+    font-size: 1rem;
+    margin: 0;
+}
+
 #population {
-	margin-bottom: 4rem;
-	height: 30rem;
-	width: 20%;
+    margin-bottom: 4rem;
+    height: 38rem;
+    width: 20%;
+    display: flex;
+    /* height: 100%; */
+    justify-content: space-around;
+    flex-direction: column;
 }
 .legend-text {
 	fill: #fff;
